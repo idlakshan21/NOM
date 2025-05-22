@@ -1,11 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login Page</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/login.css">
 </head>
+
 <body>
-    <h1>Login</h1>
+    <div class="login-container">
+        <div class="loading-screen" style="display: none;">
+            <img src="../assets/gif/loading.gif" alt="Loading..." class="loading-screen__gif" />
+            <p class="loading-screen__text">Loading, please wait...</p>
+        </div>
+
+        <h2 class="login-title"><span class="login-title__bar">|</span> Welcome back</h2>
+
+        <form class="login-form" action="#" method="post">
+            <input type="text" placeholder="Username" id="login-username" class="login-form__input" />
+            <input type="password" placeholder="Password" id="login-password" class="login-form__input" />
+            <button type="button" id="login-button" class="login-form__button">Login</button>
+        </form>
+
+        <div class="login-keyboard">
+            <div class="login-keyboard__row">
+                <button type="button" class="login-keyboard__key">1</button>
+                <button type="button" class="login-keyboard__key">2</button>
+                <button type="button" class="login-keyboard__key">3</button>
+                <button type="button" class="login-keyboard__key">4</button>
+                <button type="button" class="login-keyboard__key">5</button>
+                <button type="button" class="login-keyboard__key">6</button>
+                <button type="button" class="login-keyboard__key">7</button>
+                <button type="button" class="login-keyboard__key">8</button>
+                <button type="button" class="login-keyboard__key">9</button>
+                <button type="button" class="login-keyboard__key">0</button>
+            </div>
+
+            <div class="login-keyboard__row">
+                <button type="button" class="login-keyboard__key">Q</button>
+                <button type="button" class="login-keyboard__key">W</button>
+                <button type="button" class="login-keyboard__key">E</button>
+                <button type="button" class="login-keyboard__key">R</button>
+                <button type="button" class="login-keyboard__key">T</button>
+                <button type="button" class="login-keyboard__key">Y</button>
+                <button type="button" class="login-keyboard__key">U</button>
+                <button type="button" class="login-keyboard__key">I</button>
+                <button type="button" class="login-keyboard__key">O</button>
+                <button type="button" class="login-keyboard__key">P</button>
+            </div>
+
+            <div class="login-keyboard__row">
+                <button type="button" class="login-keyboard__key">A</button>
+                <button type="button" class="login-keyboard__key">S</button>
+                <button type="button" class="login-keyboard__key">D</button>
+                <button type="button" class="login-keyboard__key">F</button>
+                <button type="button" class="login-keyboard__key">G</button>
+                <button type="button" class="login-keyboard__key">H</button>
+                <button type="button" class="login-keyboard__key">J</button>
+                <button type="button" class="login-keyboard__key">K</button>
+                <button type="button" class="login-keyboard__key">L</button>
+            </div>
+
+            <div class="login-keyboard__row">
+                <button type="button" class="login-keyboard__key">Z</button>
+                <button type="button" class="login-keyboard__key">X</button>
+                <button type="button" class="login-keyboard__key">C</button>
+                <button type="button" class="login-keyboard__key">V</button>
+                <button type="button" class="login-keyboard__key">B</button>
+                <button type="button" class="login-keyboard__key">N</button>
+                <button type="button" class="login-keyboard__key">M</button>
+            </div>
+
+            <div class="login-keyboard__row">
+                <button class="login-keyboard__key">!#*</button>
+                <button class="login-keyboard__key">abc?</button>
+                <button class="login-keyboard__key login-keyboard__enter">Enter</button>
+                <button class="login-keyboard__key login-keyboard__backspace">Backspace</button>
+            </div>
+        </div>
+    </div>
+
 </body>
+
 </html>
