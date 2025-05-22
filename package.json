@@ -1,0 +1,34 @@
+{
+ "name": "next-order",
+ "version": "1.0.0",
+ "main": "main.js",
+"scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "electron": "^36.2.1"
+  },
+   "build": {
+    "appId": "com.intelleon.nom",
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "node_modules/**/*",
+      "config.json"
+    ],
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "icon": "src/icons/favicon.ico",
+      "signAndEditExecutable": false
+    },
+    "asar": true
+  }
+}

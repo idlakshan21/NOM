@@ -1,0 +1,30 @@
+# Node dependencies
+/node_modules
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Electron build artifacts
+/dist
+/build
+/*.asar
+
+# Environment/config
+.env
+config.json
+
+# IDE/editor configs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+config.json
