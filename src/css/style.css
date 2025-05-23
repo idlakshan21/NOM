@@ -37,7 +37,7 @@ body {
   width: 100%;
   font-family: var(--font-primary);
   color: var(--color-text);
-  background-color: var(--color-bg);
+  background-color: var(--color-tertiary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: flex;
@@ -99,7 +99,7 @@ button:hover {
 
 button:disabled {
   background-color: var(--color-border);
-  color: #666666;
+  color: var(--color-border);
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
@@ -123,16 +123,18 @@ button:disabled {
     backdrop-filter: blur(5px); 
   }
 
+  
+
 .alert-orange-button {
-    background-color:var(--primary-color);
-    border-color:var(--primary-color) ;
+    background-color:var(--color-secondary);
+    border-color:var(--color-primary) ;
     border: none ;
     outline: none ;
   }
 
   .alert-black-button {
-    background-color:var(--secondary-color);
-    border-color:var(--secondary-color);
+    background-color:var(--color-secondary);
+    border-color:var(--color-secondary);
     border: none;
     outline: none;
   }

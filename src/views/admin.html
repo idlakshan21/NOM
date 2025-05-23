@@ -1,11 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Admin</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin/layout.css">
+    <link rel="stylesheet" href="../css/admin/dashboard.css">
 </head>
+
 <body>
-    <h1>Admin</h1>
+    <main>
+        <aside>
+            <div class="aside-top">
+                <img class="logo" src="../assets/images/nom_logo.png" height="70px"
+                    alt="resturant management system logo" loading="eager">
+            </div>
+
+            <ul class="aside-nav-button-list">
+                <li>
+                    <div class="aside-nav-link active" id="btn-adminDashboard">
+                        <img src="../assets/icons/dashboard.png" width="55px" alt="admin-dashboard" loading="eager">
+                        Dashboard
+                    </div>
+                </li>
+
+                <li>
+                    <div class="aside-nav-link" id="btn-adminEmployer">
+                        <img src="../assets/icons/employeer.png" width="58px" alt="admin-dashboard user"
+                            loading="eager">
+                        Employee
+                    </div>
+                </li>
+
+                <li>
+                    <div class="aside-nav-link" id="btn-adminDish">
+                        <img src="../assets/icons/dish.png" width="62px" alt="admin-dashboard dish" loading="eager">
+                        Dish
+                    </div>
+
+                </li>
+
+                <li>
+                    <div class="aside-nav-link" id="btn-adminStock">
+                        <img src="../assets/icons/stock.png" width="58px" alt="admin-dashboard stock" loading="eager">
+                        Stock
+                    </div>
+
+                </li>
+
+                <li>
+                    <div class="aside-nav-link" id="btn-adminOrder">
+                        <img src="../assets/icons/order.png" width="60px" alt="admin-dashboard order" loading="eager">
+                        Order
+                    </div>
+
+                </li>
+
+                <li>
+
+                    <div class="aside-nav-link" id="btn-adminCustomer">
+                        <img src="../assets/icons/customers.png" width="60px" alt="admin-dashboard report"
+                            loading="eager">
+                        Customer
+                    </div>
+
+                </li>
+                <li>
+                    <div class="aside-nav-link" id="btn-adminReport">
+                        <img src="../assets/icons/report.png" width="60px" alt="admin-dashboard report" loading="eager">
+                        Report
+                    </div>
+
+                </li>
+                <li>
+                    <div class="aside-nav-link" id="btn-adminTable">
+                        <img src="../assets/icons/table_nav.png" width="60px" alt="admin-dashboard table"
+                            loading="eager">
+                        Table
+                    </div>
+
+                </li>
+                <li>
+                    <div class="aside-nav-link" id="btn-adminCredit">
+                        <img src="../assets/icons/credit.png" width="60px" alt="admin-dashboard table" loading="eager">
+                        Credit
+                    </div>
+
+                </li>
+
+
+            </ul>
+        </aside>
+
+        <section class="container-layout">
+            <nav class="navbar">
+                <div class="navbar-left">
+                    <img src="../assets/icons/admin-img.png" class="logo-img" height="50px" alt="admin logo"
+                        loading="eager">
+                    <p id="currentDateAndTime">11 AUG 2024 | 9.02 AM</p>
+                </div>
+                <div class="navbar-right">
+                    <label class="custom-toggle">
+                        <input type="checkbox" id="roleToggle" checked>
+                        <span class="slider">
+                            <span class="label left">Admin</span>
+                            <span class="label right">Cashier</span>
+                            <span class="circle"></span>
+                        </span>
+                    </label>
+
+
+
+                    <div class="cashier-top-notification">
+                        <img src="../assets/icons/notification-orange.png" class="inPreparing-bell" alt="notifications"
+                            loading="eager" width="35px" height="35px">
+                        <p class="notifications-count">6</p>
+                    </div>
+                    <img class="cashier-logout" src="../assets/icons/logout.png" style="cursor: pointer;" alt="log out"
+                        loading="eager" width="35px" height="35px" id="logOut">
+
+                </div>
+            </nav>
+
+            <!-- ==========================admin-dashboard=================================   -->
+            <section class="admin-section dashboard" style="display: block;" id="dashboard-section">
+                <div class="dashboard-container">
+                    <div class="dashboard-left">
+                        <div class="dashboard-details">
+                            <div class="count-wrap">
+                                <div class="count-box">
+                                    <div class="count-box-img-wrapper" id="employee_count_img">
+                                        <img src="../assets/images/workers_count.png" height="85%" alt="">
+                                    </div>
+                                    <div class="count-box-details-wrapper">
+                                        <span class="dashboard-count" id="count_emp">0</span>
+                                        <h3>Workers</h3>
+                                    </div>
+                                </div>
+                                <div class="count-box">
+                                    <div class="count-box-img-wrapper" id="orders_count_img">
+                                        <img src="../assets/images/orders_count.png" height="80%" alt="">
+                                    </div>
+                                    <div class="count-box-details-wrapper">
+                                        <span class="dashboard-count" id="count_orders">8900</span>
+                                        <h3>Orders</h3>
+                                    </div>
+                                </div>
+                                <div class="count-box">
+                                    <div class="count-box-img-wrapper" id="dishes_count_img">
+                                        <img src="../assets/images/dish_count.png" height="85%" alt="">
+                                    </div>
+                                    <div class="count-box-details-wrapper">
+                                        <span class="dashboard-count" id="count_dishes">0</span>
+                                        <h3>Dishes</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dashboard-report">
+                            <!-- <h4>Report View</h4> -->
+                            <div class="dashborad-chart">
+                                <canvas id="barchartTwo"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-right">
+                        <div class="container-wrap-right">
+                            <div class="right-wrap-inside">
+                                <div class="tablesView-head">
+                                    <div class="dashboard-header-wrap">
+                                        <h1 class="heading-dashboard-tables">Tables</h3>
+                                    </div>
+                                </div>
+                                <div class="color-intro-wrap">
+                                    <div class="color-intro-group">
+                                        <div class="color-box color-box-1"></div>
+                                        <p>Occupied</p>
+                                    </div>
+
+                                    <div class="color-intro-group">
+                                        <div class="color-box color-box-2"></div>
+                                        <p>U-Maintain</p>
+                                    </div>
+
+                                    <div class="color-intro-group">
+                                        <div class="color-box color-box-3"></div>
+                                        <p>Free</p>
+                                    </div>
+                                </div>
+
+                                <div class="switch-wrap">
+                                    <div class="RightTopNavbarsub">
+                                        <label class="custom-toggle">
+                                            <input type="checkbox" id="roleToggle" checked>
+                                            <span class="slider">
+                                                <span class="label left">indoor</span>
+                                                <span class="label right">outdoor</span>
+                                                <span class="circle"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="card-section" id="tableCardSection">
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </section>
+    </main>
 </body>
+
 </html>
