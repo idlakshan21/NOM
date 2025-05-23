@@ -1,3 +1,11 @@
+import {getEmployeesUrl} from '../routes/employeeRoute.js'; 
+import {getOrdersUrl} from '../routes/ordersRoute.js'; 
+import {getDishesUrl} from '../routes/dishesRoute.js'; 
+import {getIndoorTablesUrl,getOutdoorTablesUrl} from '../routes/tablesRoute.js'; 
+import {getDashboardReportUrl} from '../routes/reportsRoute.js'; 
+
+
+
 const getHeaders = () => ({
     'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
     'Content-Type': 'application/json'
@@ -5,7 +13,7 @@ const getHeaders = () => ({
 
 
 export async function fetchEmployees(baseURL) {
-    const response = await fetch(`${baseURL}/user/users`, {
+    const response = await fetch(getEmployeesUrl(baseURL), {
         method: 'GET',
         headers: getHeaders()
     });
@@ -20,7 +28,7 @@ export async function fetchEmployees(baseURL) {
 
 
 export async function fetchOrders(baseURL) {
-    const response = await fetch(`${baseURL}/orders/orders`, {
+    const response = await fetch(getOrdersUrl(baseURL), {
         method: 'GET',
         headers: getHeaders()
     });
@@ -34,7 +42,7 @@ export async function fetchOrders(baseURL) {
 
 
 export async function fetchDishes(baseURL) {
-    const response = await fetch(`${baseURL}/dish/dishes`, {
+    const response = await fetch(getDishesUrl(baseURL), {
         method: 'GET',
         headers: getHeaders()
     });
@@ -48,7 +56,7 @@ export async function fetchDishes(baseURL) {
 
 
 export async function fetchIndoorTables(baseURL) {
-    const response = await fetch(`${baseURL}/table/inDoor`, {
+    const response = await fetch(getIndoorTablesUrl(baseURL), {
         method: 'GET',
         headers: getHeaders()
     });
@@ -63,7 +71,7 @@ export async function fetchIndoorTables(baseURL) {
 
 
 export async function fetchOutdoorTables(baseURL) {
-    const response = await fetch(`${baseURL}/table/outDoor`, {
+     const response = await fetch(getOutdoorTablesUrl(baseURL), {
         method: 'GET',
         headers: getHeaders()
     });
@@ -77,7 +85,7 @@ export async function fetchOutdoorTables(baseURL) {
 
 
 export async function fetchDashboardReport(baseURL) {
-    const response = await fetch(`${baseURL}/report`, {
+     const response = await fetch(getDashboardReportUrl(baseURL), {
         method: 'GET',
         headers: getHeaders()
     });

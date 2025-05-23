@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600&family=Inter:wght@400;600&display=swap');
 
 :root {
- 
+
   --color-primary: #ea6d27;
   --color-secondary: #101a24;
   --color-tertiary: #ffffff;
@@ -13,11 +13,11 @@
   --color-text: #101a24;
   --color-border: #ccc;
 
-  
+
   --color-success: #00cc00;
   --color-error: #ff3300;
 
- 
+  --text-field-border: #a6a6a6;
   --font-primary: 'Inter', sans-serif;
   --font-secondary: 'Be Vietnam Pro', sans-serif;
 }
@@ -41,8 +41,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: flex;
-  justify-content: center;  
-  align-items: center;  
+  justify-content: center;
+  align-items: center;
 }
 
 img {
@@ -79,18 +79,38 @@ p {
   color: var(--color-text);
 }
 
-button{
-  padding: 0.75rem;
+button {
   margin: 1rem auto;
   border: none;
   border-radius: 0.375rem;
   background-color: var(--color-secondary);
   color: var(--color-tertiary);
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.9rem;
   display: block;
   transition: background-color 0.3s ease;
 }
+
+.btn-submit {
+  width: 95px;
+  height: 38px;
+}
+
+.btnDownlod {
+  border-radius: 5px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  background-color: var(--color-bg);
+  outline: none;
+  width: 45%;
+  padding: 1px;
+  height: 40px !important;
+  display: flex;
+  padding: 10px;
+  color: var(--color-secondary);
+
+
+}
+
 
 button:hover {
   transform: translateY(-2px);
@@ -107,34 +127,133 @@ button:disabled {
 }
 
 #loadingScreen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    color: #333;
-    z-index: 1000;
-    backdrop-filter: blur(5px); 
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: #333;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
 
-  
+
 
 .alert-orange-button {
-    background-color:var(--color-secondary);
-    border-color:var(--color-primary) ;
-    border: none ;
-    outline: none ;
+  background-color: var(--color-secondary);
+  border-color: var(--color-primary);
+  border: none;
+  outline: none;
+}
+
+.alert-black-button {
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
+  border: none;
+  outline: none;
+}
+
+
+.dinein-table {
+  border: 2px solid var(--text-field-border);
+  border-radius: 8px;
+  background-color: var(--color-tertiary);
+  width: 23%;
+  height: 34%;
+  margin-top: 2%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  margin-left: 0.5%;
+  cursor: pointer;
+}
+
+.dinein-table-header {
+  display: flex;
+  width: 100%;
+  height: 15%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.dinein-table-body {
+  display: flex;
+  width: 100%;
+  height: 45%;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: white;
+
+}
+
+.dinein-table-footer {
+  display: flex;
+  width: 100%;
+  height: 15%;
+  padding: 0 5px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  padding: 0px 5px;
+  margin: 0px 5px;
+  height: 80px;
+  cursor: pointer;
+}
+
+th {
+  background-color: #d9d9d9;
+  text-align: center;
+  padding: 6px;
+  position: sticky;
+  top: 0%;
+
+}
+
+table th:first-child {
+  border-top-left-radius: 10px;
+}
+
+tbody {
+  overflow-y: scroll;
+}
+
+table th:last-child {
+  border-top-right-radius: 10px;
+}
+
+td {
+  text-align: center;
+  border-bottom: 1px solid var(--text-field-border);
+  padding: 5px;
+}
+
+@media (max-width: 1200px) {
+  .btn-submit {
+    width: 80px;
+    height: 34px;
+    font-size: 0.8rem;
   }
 
-  .alert-black-button {
-    background-color:var(--color-secondary);
-    border-color:var(--color-secondary);
-    border: none;
-    outline: none;
+  #btn_changePassword_popup {
+    width: 90px !important;
+    font-size: 0.6rem;
+    height: 35px;
   }
+}

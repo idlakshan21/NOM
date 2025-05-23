@@ -5,9 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
+    <link href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/admin/layout.css">
     <link rel="stylesheet" href="../css/admin/dashboard.css">
+    <link rel="stylesheet" href="../css/admin/employee.css">
 </head>
 
 <body>
@@ -144,7 +147,7 @@
                                         <img src="../assets/images/orders_count.png" height="80%" alt="">
                                     </div>
                                     <div class="count-box-details-wrapper">
-                                        <span class="dashboard-count" id="count_orders">8900</span>
+                                        <span class="dashboard-count" id="count_orders">0</span>
                                         <h3>Orders</h3>
                                     </div>
                                 </div>
@@ -160,7 +163,6 @@
                             </div>
                         </div>
                         <div class="dashboard-report">
-                            <!-- <h4>Report View</h4> -->
                             <div class="dashborad-chart">
                                 <canvas id="barchartTwo"></canvas>
                             </div>
@@ -216,13 +218,265 @@
                 </div>
             </section>
 
+            <!-- ==========================admin-Employee=================================   -->
+            <section class="admin-section employee" id="employee-section" style="display: none;">
+                <div class="empBackground"></div>
+                <div class="employee-container admin-container">
+                    <div class="employee-wrap-left">
+                        <div class="employee-header-wrap">
+                            <h1 class="heading-employee">Employee Manage</h3>
+                                <div class="btnAddingredients-area">
+                                    <button class="btn-submit" id="btn_changePassword_popup">Change
+                                        Password</button>
+                                </div>
+                        </div>
+
+                        <form action="" class="employee-form-wrap" id="employee_Form">
+                            <div class="input-container" id="employee_input_container">
+                                <input class="" type="text" id="employee_id" placeholder="Employee Id" name="employeeId"
+                                    disabled>
+                            </div>
+                            <div class="input-container" id="emp-input-container">
+                                <input class="" type="text" id="employee_name" placeholder="Employee Name"
+                                    name="employeeName">
+                            </div>
+                            <div class="input-container" id="emp-input-container">
+                                <input class="" type="text" id="employee_contact" placeholder="Employee Contact"
+                                    name="employeeContact">
+                            </div>
+
+                            <div class="input-container" id="input_container_selectRoles">
+                                <select id="user_role_one" name="userRoleOne">
+                                    <option>Admin</option>
+                                    <option value="cashier">Cashier</option>
+                                    <option>Waiter</option>
+                                    <option>Chef</option>
+                                </select>
+                                <select id="user_role_two" name="userRoleTwo" disabled>
+                                    <option>Empty</option>
+                                    <option>Waiter</option>
+                                    <option>Chef</option>
+                                </select>
+                            </div>
+                            <div class="input-container">
+                                <input class="" type="password" id="employee_password" placeholder="Password"
+                                    name="userPassword">
+                            </div>
+                            <div class="input-container">
+                                <input class="" type="password" id="employee_confrimPassword"
+                                    placeholder="Confrim Password" name="userConfrimPassword">
+                            </div>
+                            <div class="input-container">
+                                <input class="" type="text" id="employee_address" placeholder="Employee Address"
+                                    name="userAddress">
+
+                            </div>
+                            <div class="input-container" id="input-container-buttonArea">
+                                <button class="btn-submit" id="btn_delete_employee" type="button">Delete</button>
+                                <button class="btn-submit" id="btn_update_employee" type="button">Update</button>
+                                <button class="btn-submit" id="btn_save_employee" type="button">Save</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="employee-wrap-right">
+                        <div class="allemployee-header-wrap">
+                            <h1 class="heading-AllEmployee">All Employees</h3>
+                                <div class="buttonAarea-allemployee">
+                                    <button class="btnDownlod" id="employee_exc_download"><img
+                                            src="../assets/icons/excel.png" width="27px" style="padding-right: 4px;" alt="">
+                                        Download</button>
+                                    <button class="btnDownlod" id="employee_csv_download"> <img
+                                            src="../assets/icons/csv.png" width="27px" style="padding-right: 4px;" alt="">
+                                        Download</button>
+                                </div>
+
+                        </div>
+                        <div class="allemployee-bottom-wrap">
+                            <table id="tbl_employee">
+                                <thead>
+                                    <tr>
+                                        <th>#Id</th>
+                                        <th>Employee Id</th>
+                                        <th>Name</th>
+                                        <th>Contact</th>
+                                        <th>Roles</th>
+                                        <th>Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbl_employee_body">
+
+                                </tbody>
+                            </table>
+                            <div id="pagination-controls" class="pagination"></div>
+                        </div>
+
+                    </div>
+
+                    <!-- <div class="draggable-keyboard">
+                        <img class="btnDraggable_keyboard" src="../assets/icons/keyboard-icon.png" width="70px" alt="">
+                    </div>
+                    <div class="keyboard-outer" style="display: none;">
+                        <div class="admin-keyboard-row">
+                            <div class="admin-keyboard-button admin-keyboard-button-number">1</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">2</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">3</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">4</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">5</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">6</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">7</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">8</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">9</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">0</div>
+                        </div>
+                        <div class="admin-keyboard-row">
+                            <div class="admin-keyboard-button">Q</div>
+                            <div class="admin-keyboard-button">W</div>
+                            <div class="admin-keyboard-button">E</div>
+                            <div class="admin-keyboard-button">R</div>
+                            <div class="admin-keyboard-button">T</div>
+                            <div class="admin-keyboard-button">Y</div>
+                            <div class="admin-keyboard-button">U</div>
+                            <div class="admin-keyboard-button">I</div>
+                            <div class="admin-keyboard-button">O</div>
+                            <div class="admin-keyboard-button">P</div>
+                        </div>
+                        <div class="admin-keyboard-row">
+                            <div class="admin-keyboard-button">A</div>
+                            <div class="admin-keyboard-button">S</div>
+                            <div class="admin-keyboard-button">D</div>
+                            <div class="admin-keyboard-button">F</div>
+                            <div class="admin-keyboard-button">G</div>
+                            <div class="admin-keyboard-button">H</div>
+                            <div class="admin-keyboard-button">J</div>
+                            <div class="admin-keyboard-button">K</div>
+                            <div class="admin-keyboard-button">L</div>
+                        </div>
+                        <div class="admin-keyboard-row">
+                            <div class="admin-keyboard-button">Z</div>
+                            <div class="admin-keyboard-button">X</div>
+                            <div class="admin-keyboard-button">C</div>
+                            <div class="admin-keyboard-button">V</div>
+                            <div class="admin-keyboard-button">B</div>
+                            <div class="admin-keyboard-button">N</div>
+                            <div class="admin-keyboard-button">M</div>
+                        </div>
+                        <div class="admin-keyboard-row">
+                            <div class="admin-keyboard-button admin-keyboard-button-special"
+                              >!#*</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-keyChange"
+                               >abc?</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-enter">Space</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-backspace">Backspace</div>
+                        </div>
+                    </div> -->
+                </div>
+            </section>
+
+                <!-- ===============employee-popup=============== -->
+            <div class="admin-popup" id="open_changePassword_popup" style="display: none;">
+                <div class="admin-popup_header">
+                    <h3 class="admin-popup_heading">Change Password</h3>
+                    <div class="admin-popup_heading_name">
+                        <h3 id="selectedEmployeeName">Employee name</h3>
+                    </div>
+
+                    <img id="close_changePassword_popup" style="cursor: pointer;"
+                        src="../assets/icons/close_icon.png" alt="">
+                </div>
+                <div class="changePassword-body-top">
+                    <form action="" class="passwordPopup-form">
+                        <input type="text" id="emp_changepassword_id" style="display: none;">
+                        <div class="input-container" style="background-color: var(--color-tertiary);">
+                            <input type="password" id="employee_currentPassword" placeholder="Current Password" name="currentPassword">
+                        </div>
+                        <div class="input-container" style="background-color: var(--color-tertiary);">
+                            <input type="password" id="employee_newPassword" placeholder="New Password" name="newPassowrd">
+
+                        </div>
+                        <div class="input-container" style="background-color: var(--color-tertiary);">
+                            <input  type="password" id="employee_confirm_newPassword" placeholder="Confirm New Password" name="confirmNewPassword">
+                        </div>
+                    </form>
+
+
+                </div>
+                <div class="changePassword-body-bottom">
+                    <div class="keyboard-outer-popup">
+                        <div class="admin-keyboard-row-popup">
+                            <div class="admin-popup_keyboard_button admin-popup_keyboard_buttonNum">1</div>
+                            <div class="admin-popup_keyboard_button admin-popup_keyboard_buttonNum">2</div>
+                            <div class="admin-popup_keyboard_button admin-popup_keyboard_buttonNum">3</div>
+                            <div class="admin-popup_keyboard_button admin-popup_keyboard_buttonNum">4</div>
+                            <div class="admin-popup_keyboard_button admin-popup_keyboard_buttonNum">5</div>
+                            <div class="admin-popup_keyboard_button admin-popup_keyboard_buttonNum">6</div>
+                            <div class="admin-popup_keyboard_button admin-popup_keyboard_buttonNum">7</div>
+                            <div class="admin-popup_keyboard_button admin-popup_keyboard_buttonNum">8</div>
+                            <div class="admin-popup_keyboard_button admin-popup_keyboard_buttonNum">9</div>
+                            <div class="admin-popup_keyboard_button admin-popup_keyboard_buttonNum">0</div>
+                            <div class="admin-popup_keyboard_button admin-popup_keyboard_buttonBackSpace">&#8592;
+                            </div>
+                        </div>
+                        <div class="admin-keyboard-row-popup">
+                            <div class="admin-popup_keyboard_button">Q</div>
+                            <div class="admin-popup_keyboard_button">W</div>
+                            <div class="admin-popup_keyboard_button">E</div>
+                            <div class="admin-popup_keyboard_button">R</div>
+                            <div class="admin-popup_keyboard_button">T</div>
+                            <div class="admin-popup_keyboard_button">Y</div>
+                            <div class="admin-popup_keyboard_button">U</div>
+                            <div class="admin-popup_keyboard_button">I</div>
+                            <div class="admin-popup_keyboard_button">O</div>
+                            <div class="admin-popup_keyboard_button">P</div>
+                            <div class="admin-popup_keyboard_button admin-popup_keyboard_buttonDot">.</div>
+                        </div>
+                        <div class="admin-keyboard-row-popup">
+                            <div class="admin-popup_keyboard_button">A</div>
+                            <div class="admin-popup_keyboard_button">S</div>
+                            <div class="admin-popup_keyboard_button">D</div>
+                            <div class="admin-popup_keyboard_button">F</div>
+                            <div class="admin-popup_keyboard_button">G</div>
+                            <div class="admin-popup_keyboard_button">H</div>
+                            <div class="admin-popup_keyboard_button">J</div>
+                            <div class="admin-popup_keyboard_button">K</div>
+                            <div class="admin-popup_keyboard_button">L</div>
+                        </div>
+                        <div class="admin-keyboard-row-popup">
+                            <div class="admin-popup_keyboard_button admin-popup_keyboard_buttonSpecial"
+                                id="admin-keyboard-button-special">!#*</div>
+                            <div class="admin-popup_keyboard_button admin-popup_keyboard_buttonLetter"
+                            id="admin-keyboard-button-abc">abc?
+                            </div>
+                            <div class="admin-popup_keyboard_button">Z</div>
+                            <div class="admin-popup_keyboard_button">X</div>
+                            <div class="admin-popup_keyboard_button">C</div>
+                            <div class="admin-popup_keyboard_button">V</div>
+                            <div class="admin-popup_keyboard_button">B</div>
+                            <div class="admin-popup_keyboard_button">N</div>
+                            <div class="admin-popup_keyboard_button">M</div>
+                            <div class="admin-popup_keyboard_button admin-popup_keyboard_buttonSpace">Space</div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="btnChangepassword-wrapper">
+                    <button class="btn-submit" id="btn_changePassword">Confirm</button>
+                </div>
+            </div>
+
+
+
+
         </section>
     </main>
 
-   <script src="https://unpkg.com/chart.js"></script>
+    <script src="https://unpkg.com/chart.js"></script>
+    <script src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script>
+    
     <script src="../scripts/admin/layout.js"></script>
     <script type="module" src="../scripts/admin/dashboard.js"></script>
- 
+
 </body>
 
 </html>

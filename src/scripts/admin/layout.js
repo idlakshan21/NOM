@@ -2,6 +2,41 @@
 const dateAndTimeElement = document.getElementById("currentDateAndTime");
 
 
+document.addEventListener('DOMContentLoaded', () => {
+    const sections = [
+        'dashboard-section', 'credit-section', 'employee-section', 'dish-section',
+        'stock-section', 'order-section', 'customer-section', 'report-section',
+        'currentStockReport', 'creditReport', 'stockReport', 'cashSettlementReport',
+        'salesReport', 'incomeReport', 'expensesReport', 'orderDetailsReport',
+        'creditPaymentReport', 'table-section', 'dishReport'
+    ];
+
+    const hideAllSections = () => {
+        sections.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.style.display = 'none';
+        });
+    };
+
+    const showSection = (id) => {
+        hideAllSections();
+        const section = document.getElementById(id);
+        if (section) section.style.display = 'block';
+    };
+
+    document.getElementById('btn-adminDashboard').addEventListener('click', () => showSection('dashboard-section'));
+    document.getElementById('btn-adminEmployer').addEventListener('click', () => showSection('employee-section'));
+    document.getElementById('btn-adminDish').addEventListener('click', () => showSection('dish-section'));
+    document.getElementById('btn-adminStock').addEventListener('click', () => showSection('stock-section'));
+    document.getElementById('btn-adminOrder').addEventListener('click', () => showSection('order-section'));
+    document.getElementById('btn-adminCustomer').addEventListener('click', () => showSection('customer-section'));
+    document.getElementById('btn-adminReport').addEventListener('click', () => showSection('report-section'));
+    document.getElementById('btn-adminTable').addEventListener('click', () => showSection('table-section'));
+    document.getElementById('btn-adminCredit').addEventListener('click', () => showSection('credit-section'));
+});
+
+
+
 
 function updateTime() {
     const months = [
