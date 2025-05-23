@@ -106,16 +106,33 @@ button:disabled {
   opacity: 0.7;
 }
 
+#loadingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #333;
+    z-index: 1000;
+    backdrop-filter: blur(5px); 
+  }
+
 .alert-orange-button {
-    background-color:var(--primary-color) !important;
-    border-color:var(--primary-color) !important;
-    border: none !important;
-    outline: none !important;
+    background-color:var(--primary-color);
+    border-color:var(--primary-color) ;
+    border: none ;
+    outline: none ;
   }
 
   .alert-black-button {
-    background-color:var(--secondary-color) !important;
-    border-color:var(--secondary-color) !important;
-    border: none !important;
-    outline: none !important;
+    background-color:var(--secondary-color);
+    border-color:var(--secondary-color);
+    border: none;
+    outline: none;
   }

@@ -7,11 +7,12 @@
     <title>Login Page</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 
 <body>
     <div class="login-container">
-        <div class="loading-screen" style="display: none;">
+        <div class="loading-screen" id="loadingScreen" style="display: none;">
             <img src="../assets/gif/loading.gif" alt="Loading..." class="loading-screen__gif" />
             <p class="loading-screen__text">Loading, please wait...</p>
         </div>
@@ -26,16 +27,16 @@
 
         <div class="login-keyboard">
             <div class="login-keyboard__row">
-                <button type="button" class="login-keyboard__key">1</button>
-                <button type="button" class="login-keyboard__key">2</button>
-                <button type="button" class="login-keyboard__key">3</button>
-                <button type="button" class="login-keyboard__key">4</button>
-                <button type="button" class="login-keyboard__key">5</button>
-                <button type="button" class="login-keyboard__key">6</button>
-                <button type="button" class="login-keyboard__key">7</button>
-                <button type="button" class="login-keyboard__key">8</button>
-                <button type="button" class="login-keyboard__key">9</button>
-                <button type="button" class="login-keyboard__key">0</button>
+                <button type="button" class="login-keyboard__key login-keyboard__num">1</button>
+                <button type="button" class="login-keyboard__key login-keyboard__num">2</button>
+                <button type="button" class="login-keyboard__key login-keyboard__num">3</button>
+                <button type="button" class="login-keyboard__key login-keyboard__num">4</button>
+                <button type="button" class="login-keyboard__key login-keyboard__num">5</button>
+                <button type="button" class="login-keyboard__key login-keyboard__num">6</button>
+                <button type="button" class="login-keyboard__key login-keyboard__num">7</button>
+                <button type="button" class="login-keyboard__key login-keyboard__num">8</button>
+                <button type="button" class="login-keyboard__key login-keyboard__num">9</button>
+                <button type="button" class="login-keyboard__key login-keyboard__num">0</button>
             </div>
 
             <div class="login-keyboard__row">
@@ -74,14 +75,16 @@
             </div>
 
             <div class="login-keyboard__row">
-                <button class="login-keyboard__key">!#*</button>
-                <button class="login-keyboard__key">abc?</button>
+                <button class="login-keyboard__key login-keyboard__symbol" id="login-symbol_key">!#*</button>
+                <button class="login-keyboard__key login-keyboard__letter" id="login-letters_key">abc?</button>
                 <button class="login-keyboard__key login-keyboard__enter">Enter</button>
                 <button class="login-keyboard__key login-keyboard__backspace">Backspace</button>
             </div>
         </div>
     </div>
 
+    <script src="../scripts/login.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>
