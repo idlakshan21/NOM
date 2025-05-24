@@ -47,29 +47,7 @@
 
 }
 
-.input-container {
-    width: 90%;
-    max-width: 400px;
-    height: 40px;
-    border-radius: 6px;
-    border: 1px solid var(--text-field-border);
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    box-sizing: border-box;
-}
 
-
-.input-container input {
-    outline: none;
-    width: 100%;
-    height: 100%;
-    border-radius: 6px;
-    border: none;
-    padding-left: 13px;
-    background-color: var(--color-tertiary);
-}
 
 #input_container_selectRoles {
     display: flex;

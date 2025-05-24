@@ -118,12 +118,13 @@ button:hover {
 }
 
 button:disabled {
-  background-color: var(--color-border);
-  color: var(--color-border);
+  background-color: var(--color-tertiary);
+  color: var(--color-secondary);
+  border: 1px solid var(--color-secondary);
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
-  opacity: 0.7;
+
 }
 
 #loadingScreen {
@@ -243,6 +244,58 @@ td {
   border-bottom: 1px solid var(--text-field-border);
   padding: 5px;
 }
+
+.input-container {
+    width: 90%;
+    max-width: 400px;
+    height: 40px;
+    border-radius: 6px;
+    border: 1px solid var(--text-field-border);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    box-sizing: border-box;
+     position: relative;
+}
+
+
+.input-container input {
+    outline: none;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    border: none;
+    padding-left: 13px;
+    background-color: var(--color-tertiary);
+}
+
+
+.input-container.error {
+  border: 1px solid var(--color-error);
+}
+
+.input-container.success {
+  border: 1px solid var(--color-success);
+}
+
+.validation-icon {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  font-weight: bold;
+  font-size: 18px;
+  pointer-events: none;
+}
+
+.validation-icon.error {
+  color: var(--color-error);
+}
+
+.validation-icon.success {
+  color:var(--color-success);
+}
+
 
 @media (max-width: 1200px) {
   .btn-submit {
