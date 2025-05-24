@@ -1,6 +1,6 @@
 import { fetchEmployees, fetchOrders, fetchDishes, fetchIndoorTables, fetchOutdoorTables, fetchDashboardReport } from '../../api/dashboardApi.js';
 
-async function countAllEmployee(baseUrl) {
+export async function countAllEmployee(baseUrl) {
     const countElement = document.getElementById('count_emp');
     countElement.innerText = '0';
 
@@ -217,7 +217,6 @@ async function dashboardReport(baseUrl) {
     const ctx4 = document.getElementById('barchartTwo').getContext('2d'); 
 
     try {
-     
 
         const chartData = await fetchDashboardReport(baseUrl);
 

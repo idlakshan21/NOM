@@ -1,5 +1,6 @@
 import { validatedEmployeeSchema } from '../../validation/employeeSchema.js';
-import { saveEmployee, updateEmployee, fetchAllEmployees } from '../../api/employeeApi.js';
+import { saveEmployee, updateEmployee, fetchAllEmployees ,deleteEmployee} from '../../api/employeeApi.js';
+import {countAllEmployee} from './dashboard.js'
 
 const form = document.getElementById('employee_Form');
 const employeeSaveBtn = document.querySelector('#btn_save_employee');
@@ -19,7 +20,7 @@ let isEditMode = false;
 document.addEventListener('DOMContentLoaded', async function () {
     const baseUrl = await window.api.getBaseUrl();
 
-    loadAllEmployees(baseUrl, 0, 10);
+    loadAllEmployees(baseUrl, 0, 15);
     selectEmployeeRolesEvent();
 
     employeeSaveBtn.addEventListener('click', function () {
@@ -28,6 +29,10 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     employeeUpdateBtn.addEventListener('click', function () {
         onUpdateEmployeeClick(baseUrl);
+    });
+
+     employeeDeleteBtn.addEventListener('click', function () {
+            onDeleteEmployeeHandle(baseUrl);
     });
 
     employeeNameElement.addEventListener('input', clearEmployeeIdIfFieldsEmpty);
@@ -56,7 +61,7 @@ form.addEventListener('input', () => {
     const data = Object.fromEntries(formData.entries());
 
     const allFields = ['employeeName', 'employeeContact', 'userAddress', 'userPassword', 'userConfrimPassword'];
-    const editModeFields = ['employeeName', 'employeeContact', 'userAddress']; 
+    const editModeFields = ['employeeName', 'employeeContact', 'userAddress'];
 
     const fieldsToValidate = isEditMode ? editModeFields : allFields;
 
@@ -92,7 +97,7 @@ form.addEventListener('input', () => {
 
     const result = validatedEmployeeSchema.safeParse(validationData);
 
- 
+
     fieldsToValidate.forEach(field => {
         const input = document.querySelector(`[name="${field}"]`);
         const container = input?.parentElement;
@@ -186,6 +191,8 @@ async function onSaveEmployeeClick(baseUrl) {
             timer: 1500
         });
         resetEmployeeInput()
+        loadAllEmployees(baseUrl,0,10);
+        countAllEmployee(baseUrl);
         return data;
 
     } catch (error) {
@@ -294,7 +301,7 @@ function updatePaginationControls(baseUrl, currentPage, pageSize, totalPages) {
         paginationHtml += `<button class="pagination-btn ${currentPage === totalPages - 1 ? "active" : ""}" data-page="${totalPages - 1}">${totalPages}</button>`;
     }
 
-   
+
     paginationHtml += `<button class="pagination-btn" data-page="${currentPage + 1}" ${currentPage >= totalPages - 1 ? "disabled" : ""}>Next</button>`;
 
     const paginationControls = document.getElementById("pagination-controls");
@@ -316,7 +323,7 @@ function employeeTableClickEvenetHandle() {
     const tblEmployeeRows = document.querySelectorAll('#tbl_employee_body tr');
     for (let i = 0; i < tblEmployeeRows.length; i++) {
         tblEmployeeRows[i].addEventListener('click', function () {
-    
+
             isEditMode = true;
 
             const cells = tblEmployeeRows[i].getElementsByTagName("td");
@@ -340,7 +347,6 @@ function employeeTableClickEvenetHandle() {
             employeeContactElement.value = empContact;
             employeeAddressElement.value = empAddress;
 
-  e
             employeePasswordElement.disabled = true;
             employeeConfirmPasswordElement.disabled = true;
             employeeRoleElementTwo.disabled = false;
@@ -407,10 +413,15 @@ async function onUpdateEmployeeClick(baseUrl) {
             });
         }
 
-        const { adminCount } = await loadAllEmployees(baseUrl, 0, 10);
+        const { adminCount } = await loadAllEmployees(baseUrl, 0, 20);
+        // console.log(adminCount);
+
         const isRemovingAdmin =
             employeeData.userId === currentUserId &&
             employeeData.tblAuthUserRolesDTOS.every(role => role.userRoleId !== roleIds["Admin"]);
+
+       //console.log(isRemovingAdmin);
+
 
         if (adminCount <= 1 && isRemovingAdmin) {
             Swal.fire({
@@ -432,7 +443,7 @@ async function onUpdateEmployeeClick(baseUrl) {
             showConfirmButton: false,
             timer: 1500
         });
-e
+
         isEditMode = false;
 
         if (typeof btnOpenChangePassword !== 'undefined') {
@@ -478,17 +489,17 @@ function clearEmployeeIdIfFieldsEmpty() {
     const empAddress = employeeAddressElement.value.trim();
 
     if (empName === '' && empContact === '' && empAddress === '') {
-  
+
         isEditMode = false;
-        
+
         employeeIdElement.value = '';
         employeeRoleElementOne.value = 'Admin';
         employeeRoleElementTwo.value = 'Empty';
         employeeRoleElementTwo.disabled = true;
-        
+
         employeePasswordElement.disabled = false;
         employeeConfirmPasswordElement.disabled = false;
-        
+
         const allFields = ['employeeName', 'employeeContact', 'userAddress', 'userPassword', 'userConfrimPassword'];
         allFields.forEach(field => {
             const input = document.querySelector(`[name="${field}"]`);
@@ -499,9 +510,98 @@ function clearEmployeeIdIfFieldsEmpty() {
                 if (existingIcon) existingIcon.remove();
             }
         });
-        
+
         ['btn_save_employee', 'btn_update_employee', 'btn_delete_employee'].forEach(id => {
             document.getElementById(id).disabled = true;
+        });
+    }
+}
+
+//----------Employee delete event-----------
+async function onDeleteEmployeeHandle(baseUrl) {
+    try {
+        const { groupedEmployees, adminCount } = await loadAllEmployees(baseUrl, 0, 10);
+        const employeeId = employeeIdElement.value;
+        const currentUserId = localStorage.getItem("userId");
+
+        const employee = groupedEmployees[employeeId];
+
+        if (!employee) throw new Error('Employee not found');
+
+        const isAdmin = employee.roles.includes("Admin");
+        const isDeletingSelf = employeeId === currentUserId;
+
+        if (adminCount <= 1 && isAdmin) {
+            return Swal.fire({
+                icon: "warning",
+                title: "Cannot Delete Admin",
+                text: "There must be at least one Admin in the system.",
+                confirmButtonColor: "#EA6D27"
+            });
+        }
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#EA6D27",
+            cancelButtonColor: "#101A24",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await deleteEmployee(baseUrl, employeeId);
+
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Employee deleted successfully.",
+                        icon: "success",
+                        confirmButtonColor: "#EA6D27"
+                    });
+
+                  //  btnOpenChangePassword.disabled = true;
+
+                    if (isDeletingSelf) {
+                        Swal.fire({
+                            title: "Account Deleted",
+                            html: `<div style="color: var(--primary-color); font-size: 3rem; margin-bottom: 20px;">
+                                        <i class="fas fa-info-circle"></i>
+                                    </div>
+                                    <p>Your account has been deleted. Please log in again.</p>`,
+                            confirmButtonText: "OK",
+                            customClass: {
+                                confirmButton: 'swal-button-orange',
+                                popup: 'swal-custom-height'
+                            }
+                        }).then(() => {
+                            localStorage.clear();
+                            window.location.href = "login.html";
+                        });
+                    } else {
+                        await loadAllEmployees(baseUrl, 0, 10);
+                        resetEmployeeInput();
+                        countAllEmployee(baseUrl);
+                    }
+                } catch (error) {
+                    console.error('Error Deleting Employee:', error);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "This employee may have already been deleted.",
+                        confirmButtonColor: "#EA6D27"
+                    });
+                }
+            }
+        });
+
+    } catch (error) {
+        console.error('Error in deleteEmployee:', error);
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: error.message,
+            confirmButtonColor: "#EA6D27"
         });
     }
 }
@@ -518,10 +618,10 @@ function resetEmployeeInput() {
     employeeRoleElementOne.value = 'Admin';
     employeeRoleElementTwo.value = 'Empty';
     employeeRoleElementTwo.disabled = true;
-    
+
     employeePasswordElement.disabled = false;
     employeeConfirmPasswordElement.disabled = false;
-    
+
     employeeNameElement.focus();
 
     const fields = ['employeeName', 'employeeContact', 'userAddress', 'userPassword', 'userConfrimPassword'];

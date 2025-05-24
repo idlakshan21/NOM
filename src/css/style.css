@@ -246,28 +246,28 @@ td {
 }
 
 .input-container {
-    width: 90%;
-    max-width: 400px;
-    height: 40px;
-    border-radius: 6px;
-    border: 1px solid var(--text-field-border);
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    box-sizing: border-box;
-     position: relative;
+  width: 90%;
+  max-width: 400px;
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid var(--text-field-border);
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  box-sizing: border-box;
+  position: relative;
 }
 
 
 .input-container input {
-    outline: none;
-    width: 100%;
-    height: 100%;
-    border-radius: 6px;
-    border: none;
-    padding-left: 13px;
-    background-color: var(--color-tertiary);
+  outline: none;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  border: none;
+  padding-left: 13px;
+  background-color: var(--color-tertiary);
 }
 
 
@@ -293,9 +293,76 @@ td {
 }
 
 .validation-icon.success {
-  color:var(--color-success);
+  color: var(--color-success);
 }
 
+.swal-button-orange {
+  background-color: var(--color-primary) !important;
+  color: white !important;
+}
+
+.swal-custom-height {
+  padding: 2.3rem 1.2rem !important;
+}
+
+
+
+.pagination-wrapper {
+
+  display: flex;
+  height: 8%;
+  justify-content: flex-end;
+  margin: 2% 2% 0% 0%;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  font-family: 'Arial', sans-serif;
+}
+
+
+.pagination-btn {
+  background-color: var(--color-bg);
+  color: var(--color-secondary);
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px 15px;
+   font-size: 0.9rem;
+  font-weight: normal;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+
+
+.pagination-btn[disabled] {
+  background-color: var(--color-border);
+  color: #7f8c8d;
+  cursor: not-allowed;
+}
+
+
+.pagination-btn.active {
+  background-color: var(--color-selected);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+
+.pagination-btn:not([disabled]):hover {
+  background-color: var(--color-bg);
+  color: var(--color-selected);
+}
+
+.dots {
+  font-size: 16px;
+  color: var(--secondary-color);
+  margin: 0 10px;
+}
 
 @media (max-width: 1200px) {
   .btn-submit {
@@ -308,5 +375,10 @@ td {
     width: 90px !important;
     font-size: 0.6rem;
     height: 35px;
+  }
+
+  .pagination-btn {
+    padding: 4px 16px;
+    font-size: 0.8rem;
   }
 }

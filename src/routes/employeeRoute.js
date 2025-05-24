@@ -13,3 +13,7 @@ export function getUpdateEmployeeUrl(baseURL) {
 export function getAllEmployeesUrl(baseURL, page, size) {
     return `${baseURL}/user/usersAndRoles?page=${page}&size=${size}`;
 }
+
+export function getDeleteEmployeeUrl(baseURL, userId) {
+    return `${baseURL}/user?userId=${userId}`;
+}

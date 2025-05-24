@@ -272,8 +272,10 @@
 
                             </div>
                             <div class="input-container" id="input-container-buttonArea">
-                                <button class="btn-submit" id="btn_delete_employee" type="button" disabled>Delete</button>
-                                <button class="btn-submit" id="btn_update_employee" type="button" disabled>Update</button>
+                                <button class="btn-submit" id="btn_delete_employee" type="button"
+                                    disabled>Delete</button>
+                                <button class="btn-submit" id="btn_update_employee" type="button"
+                                    disabled>Update</button>
                                 <button class="btn-submit" id="btn_save_employee" type="button" disabled>Save</button>
                             </div>
                         </form>
@@ -284,10 +286,12 @@
                             <h1 class="heading-AllEmployee">All Employees</h3>
                                 <div class="buttonAarea-allemployee">
                                     <button class="btnDownlod" id="employee_exc_download"><img
-                                            src="../assets/icons/excel.png" width="27px" style="padding-right: 4px;" alt="">
+                                            src="../assets/icons/excel.png" width="27px" style="padding-right: 4px;"
+                                            alt="">
                                         Download</button>
                                     <button class="btnDownlod" id="employee_csv_download"> <img
-                                            src="../assets/icons/csv.png" width="27px" style="padding-right: 4px;" alt="">
+                                            src="../assets/icons/csv.png" width="27px" style="padding-right: 4px;"
+                                            alt="">
                                         Download</button>
                                 </div>
 
@@ -308,7 +312,10 @@
 
                                 </tbody>
                             </table>
-                            <div id="pagination-controls" class="pagination"></div>
+                            <div class="pagination-wrapper">
+                                <div id="pagination-controls" class="pagination"></div>
+                            </div>
+
                         </div>
 
                     </div>
@@ -373,7 +380,7 @@
                 </div>
             </section>
 
-                <!-- ===============employee-popup=============== -->
+            <!-- ===============employee-popup=============== -->
             <div class="admin-popup" id="open_changePassword_popup" style="display: none;">
                 <div class="admin-popup_header">
                     <h3 class="admin-popup_heading">Change Password</h3>
@@ -381,21 +388,24 @@
                         <h3 id="selectedEmployeeName">Employee name</h3>
                     </div>
 
-                    <img id="close_changePassword_popup" style="cursor: pointer;"
-                        src="../assets/icons/close_icon.png" alt="">
+                    <img id="close_changePassword_popup" style="cursor: pointer;" src="../assets/icons/close_icon.png"
+                        alt="">
                 </div>
                 <div class="changePassword-body-top">
                     <form action="" class="passwordPopup-form">
                         <input type="text" id="emp_changepassword_id" style="display: none;">
                         <div class="input-container" style="background-color: var(--color-tertiary);">
-                            <input type="password" id="employee_currentPassword" placeholder="Current Password" name="currentPassword">
+                            <input type="password" id="employee_currentPassword" placeholder="Current Password"
+                                name="currentPassword">
                         </div>
                         <div class="input-container" style="background-color: var(--color-tertiary);">
-                            <input type="password" id="employee_newPassword" placeholder="New Password" name="newPassowrd">
+                            <input type="password" id="employee_newPassword" placeholder="New Password"
+                                name="newPassowrd">
 
                         </div>
                         <div class="input-container" style="background-color: var(--color-tertiary);">
-                            <input  type="password" id="employee_confirm_newPassword" placeholder="Confirm New Password" name="confirmNewPassword">
+                            <input type="password" id="employee_confirm_newPassword" placeholder="Confirm New Password"
+                                name="confirmNewPassword">
                         </div>
                     </form>
 
@@ -445,7 +455,7 @@
                             <div class="admin-popup_keyboard_button admin-popup_keyboard_buttonSpecial"
                                 id="admin-keyboard-button-special">!#*</div>
                             <div class="admin-popup_keyboard_button admin-popup_keyboard_buttonLetter"
-                            id="admin-keyboard-button-abc">abc?
+                                id="admin-keyboard-button-abc">abc?
                             </div>
                             <div class="admin-popup_keyboard_button">Z</div>
                             <div class="admin-popup_keyboard_button">X</div>
@@ -474,12 +484,12 @@
     <script src="https://unpkg.com/chart.js"></script>
     <script src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script>
     <script src="../libs/zod.umd.js"></script>
-     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    
+
     <script src="../scripts/admin/layout.js"></script>
     <script type="module" src="../scripts/admin/dashboard.js"></script>
-     <script type="module" src="../scripts/admin/employee.js"></script>
+    <script type="module" src="../scripts/admin/employee.js"></script>
 
 </body>
 

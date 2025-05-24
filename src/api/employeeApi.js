@@ -1,4 +1,4 @@
-import { getSaveEmployeeUrl,getUpdateEmployeeUrl,getAllEmployeesUrl   } from '../routes/employeeRoute.js';
+import { getSaveEmployeeUrl,getUpdateEmployeeUrl,getAllEmployeesUrl,getDeleteEmployeeUrl   } from '../routes/employeeRoute.js';
 
 const getHeaders = () => ({
     'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
@@ -49,3 +49,15 @@ export async function updateEmployee(baseURL, employeeData) {
   return await response.json();
 }
 
+export async function deleteEmployee(baseURL, userId) {
+    const response = await fetch(getDeleteEmployeeUrl(baseURL, userId), {
+        method: 'DELETE',
+        headers: getHeaders()
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to delete employee");
+    }
+
+    return await response.json();
+}
