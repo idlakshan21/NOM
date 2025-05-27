@@ -1,6 +1,6 @@
 import { validatedEmployeeSchema } from '../../validation/employeeSchema.js';
 import { validatedChangePasswordSchema } from '../../validation/changePasswordSchema.js';
-import { saveEmployee, updateEmployee, fetchAllEmployees, deleteEmployee,changePassword } from '../../api/employeeApi.js';
+import { saveEmployee, updateEmployee, fetchAllEmployees, deleteEmployee, changePassword } from '../../api/employeeApi.js';
 import { countAllEmployee } from './dashboard.js'
 
 const form = document.getElementById('employee_Form');
@@ -30,6 +30,13 @@ const confirmNewPasswordElement = document.getElementById('employee_confirm_newP
 const changePasswordBtn = document.getElementById('btn_changePassword');
 const changePasswordEmpName = document.getElementById('selectedEmployeeName');
 
+const excDownloadBtn = document.getElementById('employee_exc_download');
+const csvDownloadBtn = document.getElementById('employee_csv_download');
+
+const employeePopupButtons = document.querySelectorAll(".admin-popup_keyboard_button");
+
+let selectedEmpInput;
+
 
 
 let isEditMode = false;
@@ -39,7 +46,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     loadAllEmployees(baseUrl, 0, 15);
     selectEmployeeRolesEvent();
-       initializeChangePasswordValidation();
+    initializeChangePasswordValidation();
 
     employeeSaveBtn.addEventListener('click', function () {
         onSaveEmployeeClick(baseUrl)
@@ -62,6 +69,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         empBackgroundOverlay.classList.add("overlay");
         empSideNavBr.style.pointerEvents = "none"
         empNavbar.style.pointerEvents = "none"
+        currentPasswordElement.focus();
     });
 
     btnCloseChangePassword.addEventListener("click", function () {
@@ -72,10 +80,13 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     });
 
-      changePasswordBtn.addEventListener("click", function () {
+    changePasswordBtn.addEventListener("click", function () {
         employeeChangePasswordEvent(baseUrl);
 
     });
+
+    excDownloadBtn.addEventListener('click', () => exportTable('tbl_employee', 'excel'));
+    csvDownloadBtn.addEventListener('click', () => exportTable('tbl_employee', 'csv'));
 
 });
 
@@ -671,6 +682,7 @@ function resetEmployeeInput() {
 
     employeePasswordElement.disabled = false;
     employeeConfirmPasswordElement.disabled = false;
+       btnOpenChangePassword.disabled = true;
 
     employeeNameElement.focus();
 
@@ -696,27 +708,27 @@ function resetEmployeeInput() {
 function initializeChangePasswordValidation() {
 
     changePasswordBtn.disabled = true;
-    
+
     changePasswordForm.addEventListener('input', () => {
         const formData = new FormData(changePasswordForm);
         const data = Object.fromEntries(formData.entries());
-        
-        const passwordFields = ['newPassowrd', 'confirmNewPassword']; 
+
+        const passwordFields = ['newPassowrd', 'confirmNewPassword'];
 
         const currentPasswordEmpty = !data.currentPassword?.trim();
-        
-      
+
+
         const passwordFieldsEmpty = passwordFields.every(field => !data[field]?.trim());
-        
+
         if (passwordFieldsEmpty) {
-           
+
             passwordFields.forEach(field => {
                 const input = document.querySelector(`[name="${field}"]`);
                 const container = input?.parentElement;
                 if (!container) return;
-                
+
                 container.classList.remove('error', 'success');
-                
+
                 const existingIcon = container.querySelector('.validation-icon');
                 if (existingIcon) existingIcon.remove();
             });
@@ -724,45 +736,45 @@ function initializeChangePasswordValidation() {
             changePasswordBtn.disabled = true;
             return;
         }
-        
+
 
         const result = validatedChangePasswordSchema.safeParse(data);
-        
+
 
         passwordFields.forEach(field => {
             const input = document.querySelector(`[name="${field}"]`);
             const container = input?.parentElement;
             if (!container) return;
-            
+
             container.classList.remove('error', 'success');
             const existingIcon = container.querySelector('.validation-icon');
             if (existingIcon) existingIcon.remove();
-            
+
             const fieldError = result.success ? null : result.error.issues.find(i => i.path[0] === field);
-            
+
             if (fieldError) {
                 container.classList.add('error');
-                
+
                 const errorIcon = document.createElement('span');
                 errorIcon.className = 'validation-icon error';
                 errorIcon.textContent = '❗';
                 errorIcon.title = fieldError.message;
                 container.appendChild(errorIcon);
-                
+
             } else if (data[field] && !fieldError) {
                 container.classList.add('success');
-                
+
                 const successIcon = document.createElement('span');
                 successIcon.className = 'validation-icon success';
                 successIcon.textContent = '✔';
                 container.appendChild(successIcon);
             }
         });
-        
-        const passwordsMatch = result.success && 
-                             data.newPassowrd?.trim() && 
-                             data.confirmNewPassword?.trim();
-        
+
+        const passwordsMatch = result.success &&
+            data.newPassowrd?.trim() &&
+            data.confirmNewPassword?.trim();
+
         changePasswordBtn.disabled = currentPasswordEmpty || !passwordsMatch;
     });
 }
@@ -785,8 +797,8 @@ async function employeeChangePasswordEvent(baseUrl) {
     };
 
     try {
-        const response = await changePassword(baseUrl,employeePasswordData);
-       
+        const response = await changePassword(baseUrl, employeePasswordData);
+
         Swal.fire({
             position: "top-end",
             icon: "success",
@@ -820,7 +832,7 @@ async function employeeChangePasswordEvent(baseUrl) {
         currentPasswordElement.value = '';
         newPasswordElement.value = '';
         confirmNewPasswordElement.value = '';
-          resetChangePasswordForm();
+        resetChangePasswordForm();
     }
 }
 
@@ -829,19 +841,92 @@ function resetChangePasswordForm() {
     currentPasswordElement.value = '';
     newPasswordElement.value = '';
     confirmNewPasswordElement.value = '';
-    
+
     const fieldsToValidate = ['newPassowrd', 'confirmNewPassword'];
-    
+
     fieldsToValidate.forEach(field => {
         const input = document.querySelector(`[name="${field}"]`);
         const container = input?.parentElement;
         if (!container) return;
-        
+
         container.classList.remove('error', 'success');
-        
+
         const existingIcon = container.querySelector('.validation-icon');
         if (existingIcon) existingIcon.remove();
     });
-    
+
     changePasswordBtn.disabled = true;
 }
+
+const exportTable = (tableId, format) => {
+    const table = document.getElementById(tableId);
+    const rows = Array.from(table.rows).map(row =>
+        Array.from(row.cells).map(cell => cell.textContent)
+    );
+
+    if (format === 'excel') {
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(rows), 'Sheet1');
+        XLSX.writeFile(wb, 'employees.xlsx');
+    } else {
+        const csvContent = rows.map(row => row.join(',')).join('\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'employees.csv';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+}
+
+
+
+function handleEmpPopupKeyboardButtonClick(event) {
+
+    const keyboardButtonValue = event.target.textContent.trim();
+
+    if (keyboardButtonValue === 'abc?' || keyboardButtonValue === '!#*' || keyboardButtonValue === 'ABC?' || keyboardButtonValue === '123') {
+        return;
+    }
+
+    if (selectedEmpInput) {
+        if (keyboardButtonValue.trim() === '←') {
+            selectedEmpInput.value = selectedEmpInput.value.slice(0, -1);
+        } else if (keyboardButtonValue === 'Space') {
+            selectedEmpInput.value = selectedEmpInput.value + " ";
+        } else if (keyboardButtonValue === '.') {
+            selectedEmpInput.value += '.';
+        } else {
+            selectedEmpInput.value += keyboardButtonValue;
+        }
+
+        const inputEvent = new Event('input', {
+            bubbles: true,
+            cancelable: true,
+        });
+        selectedEmpInput.dispatchEvent(inputEvent);
+
+      
+    }
+}
+
+function selectEmpPopupInput(input) {
+    selectedEmpInput = input;
+}
+
+currentPasswordElement.addEventListener('focus', function () {
+    selectEmpPopupInput(currentPasswordElement);
+});
+
+newPasswordElement.addEventListener('focus', function () {
+    selectEmpPopupInput(newPasswordElement);
+});
+
+confirmNewPasswordElement.addEventListener('focus', function () {
+    selectEmpPopupInput(confirmNewPasswordElement);
+});
+
+employeePopupButtons.forEach(button => {
+    button.addEventListener('click', handleEmpPopupKeyboardButtonClick);
+});

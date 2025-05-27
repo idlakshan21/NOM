@@ -94,6 +94,7 @@ button {
 .btn-submit {
   width: 95px;
   height: 38px;
+
 }
 
 .btnDownlod {
@@ -369,6 +370,54 @@ td {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.3); 
     z-index: 1;
+}
+
+
+.keyboard-outer-popup {
+
+    background-color: var(--color-tertiary);
+    width: 100%;
+    height: 100%;
+    padding: 15px 5px;
+}
+
+
+.admin-keyboard-row-popup {
+    display: flex;
+    justify-content: center;
+}
+
+
+.admin-popup_keyboard_button {
+    margin: 3px;
+    padding: 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    cursor: pointer;
+    width: 60px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+
+}
+
+.admin-popup_keyboard_buttonBackSpace {
+    width: 55px;
+    height: 45px;
+}
+
+.admin-popup_keyboard_buttonSpace {
+    width: 128px;
+    border: 1px solid var(--color-secondary);
+}
+
+.admin-popup_keyboard_buttonp:hover {
+    transform: translateY(-2px); 
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 @media (max-width: 1200px) {
