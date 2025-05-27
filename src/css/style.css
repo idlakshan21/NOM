@@ -107,8 +107,6 @@ button {
   display: flex;
   padding: 10px;
   color: var(--color-secondary);
-
-
 }
 
 
@@ -124,7 +122,6 @@ button:disabled {
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
-
 }
 
 #loadingScreen {
@@ -362,6 +359,16 @@ td {
   font-size: 16px;
   color: var(--secondary-color);
   margin: 0 10px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); 
+    z-index: 1;
 }
 
 @media (max-width: 1200px) {

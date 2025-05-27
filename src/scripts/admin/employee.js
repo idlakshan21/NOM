@@ -1,6 +1,7 @@
 import { validatedEmployeeSchema } from '../../validation/employeeSchema.js';
-import { saveEmployee, updateEmployee, fetchAllEmployees ,deleteEmployee} from '../../api/employeeApi.js';
-import {countAllEmployee} from './dashboard.js'
+import { validatedChangePasswordSchema } from '../../validation/changePasswordSchema.js';
+import { saveEmployee, updateEmployee, fetchAllEmployees, deleteEmployee } from '../../api/employeeApi.js';
+import { countAllEmployee } from './dashboard.js'
 
 const form = document.getElementById('employee_Form');
 const employeeSaveBtn = document.querySelector('#btn_save_employee');
@@ -13,7 +14,22 @@ const employeeRoleElementOne = document.getElementById("user_role_one");
 const employeeRoleElementTwo = document.getElementById("user_role_two");
 const employeeAddressElement = document.getElementById("employee_address");
 const employeePasswordElement = document.getElementById('employee_password');
-const employeeConfirmPasswordElement = document.getElementById('employee_confrimPassword')
+const employeeConfirmPasswordElement = document.getElementById('employee_confrimPassword');
+const popupEmployee = document.getElementById('open_changePassword_popup');
+const btnOpenChangePassword = document.getElementById('btn_changePassword_popup');
+const btnCloseChangePassword = document.getElementById('close_changePassword_popup');
+const empBackgroundOverlay = document.querySelector(".empBackground");
+const empSideNavBr = document.querySelector(".aside-nav-button-list");
+const empNavbar = document.querySelector(".navbar");
+
+const changePasswordForm = document.querySelector('.passwordPopup-form')
+const empChangePasswordId = document.getElementById('emp_changepassword_id');
+const currentPasswordElement = document.getElementById('employee_currentPassword');
+const newPasswordElement = document.getElementById('employee_newPassword');
+const confirmNewPasswordElement = document.getElementById('employee_confirm_newPassword');
+const changePasswordBtn = document.getElementById('btn_changePassword');
+const changePasswordEmpName = document.getElementById('selectedEmployeeName');
+
 
 let isEditMode = false;
 
@@ -22,6 +38,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     loadAllEmployees(baseUrl, 0, 15);
     selectEmployeeRolesEvent();
+       initializeChangePasswordValidation();
 
     employeeSaveBtn.addEventListener('click', function () {
         onSaveEmployeeClick(baseUrl)
@@ -31,13 +48,28 @@ document.addEventListener('DOMContentLoaded', async function () {
         onUpdateEmployeeClick(baseUrl);
     });
 
-     employeeDeleteBtn.addEventListener('click', function () {
-            onDeleteEmployeeHandle(baseUrl);
+    employeeDeleteBtn.addEventListener('click', function () {
+        onDeleteEmployeeHandle(baseUrl);
     });
 
     employeeNameElement.addEventListener('input', clearEmployeeIdIfFieldsEmpty);
     employeeContactElement.addEventListener('input', clearEmployeeIdIfFieldsEmpty);
     employeeAddressElement.addEventListener('input', clearEmployeeIdIfFieldsEmpty);
+
+    btnOpenChangePassword.addEventListener("click", function () {
+        popupEmployee.style.display = 'block';
+        empBackgroundOverlay.classList.add("overlay");
+        empSideNavBr.style.pointerEvents = "none"
+        empNavbar.style.pointerEvents = "none"
+    });
+
+    btnCloseChangePassword.addEventListener("click", function () {
+        popupEmployee.style.display = 'none';
+        empBackgroundOverlay.classList.remove("overlay")
+        empSideNavBr.style.pointerEvents = "auto"
+        empNavbar.style.pointerEvents = "auto"
+
+    });
 
 });
 
@@ -137,7 +169,7 @@ form.addEventListener('input', () => {
         document.getElementById('btn_update_employee').disabled = !isFormValid;
         document.getElementById('btn_delete_employee').disabled = !isFormValid;
     } else {
-       
+
         document.getElementById('btn_save_employee').disabled = !isFormValid;
         document.getElementById('btn_update_employee').disabled = true;
         document.getElementById('btn_delete_employee').disabled = true;
@@ -198,7 +230,7 @@ async function onSaveEmployeeClick(baseUrl) {
             timer: 1500
         });
         resetEmployeeInput()
-        loadAllEmployees(baseUrl,0,10);
+        loadAllEmployees(baseUrl, 0, 10);
         countAllEmployee(baseUrl);
         return data;
 
@@ -358,6 +390,11 @@ function employeeTableClickEvenetHandle() {
             employeeConfirmPasswordElement.disabled = true;
             employeeRoleElementTwo.disabled = false;
 
+            btnOpenChangePassword.disabled = false;
+            empChangePasswordId.value = employeeIdElement.value;
+            changePasswordEmpName.innerHTML = employeeNameElement.value
+
+
 
             const passwordFields = ['userPassword', 'userConfrimPassword'];
             passwordFields.forEach(field => {
@@ -427,7 +464,7 @@ async function onUpdateEmployeeClick(baseUrl) {
             employeeData.userId === currentUserId &&
             employeeData.tblAuthUserRolesDTOS.every(role => role.userRoleId !== roleIds["Admin"]);
 
-       //console.log(isRemovingAdmin);
+        //console.log(isRemovingAdmin);
 
 
         if (adminCount <= 1 && isRemovingAdmin) {
@@ -567,7 +604,7 @@ async function onDeleteEmployeeHandle(baseUrl) {
                         confirmButtonColor: "#EA6D27"
                     });
 
-                  //  btnOpenChangePassword.disabled = true;
+                    //  btnOpenChangePassword.disabled = true;
 
                     if (isDeletingSelf) {
                         Swal.fire({
@@ -648,4 +685,99 @@ function resetEmployeeInput() {
         const button = document.getElementById(id);
         if (button) button.disabled = true;
     });
+}
+
+function initializeChangePasswordValidation() {
+
+    changePasswordBtn.disabled = true;
+    
+    changePasswordForm.addEventListener('input', () => {
+        const formData = new FormData(changePasswordForm);
+        const data = Object.fromEntries(formData.entries());
+        
+        const passwordFields = ['newPassowrd', 'confirmNewPassword']; 
+
+        const currentPasswordEmpty = !data.currentPassword?.trim();
+        
+      
+        const passwordFieldsEmpty = passwordFields.every(field => !data[field]?.trim());
+        
+        if (passwordFieldsEmpty) {
+           
+            passwordFields.forEach(field => {
+                const input = document.querySelector(`[name="${field}"]`);
+                const container = input?.parentElement;
+                if (!container) return;
+                
+                container.classList.remove('error', 'success');
+                
+                const existingIcon = container.querySelector('.validation-icon');
+                if (existingIcon) existingIcon.remove();
+            });
+
+            changePasswordBtn.disabled = true;
+            return;
+        }
+        
+
+        const result = validatedChangePasswordSchema.safeParse(data);
+        
+
+        passwordFields.forEach(field => {
+            const input = document.querySelector(`[name="${field}"]`);
+            const container = input?.parentElement;
+            if (!container) return;
+            
+            container.classList.remove('error', 'success');
+            const existingIcon = container.querySelector('.validation-icon');
+            if (existingIcon) existingIcon.remove();
+            
+            const fieldError = result.success ? null : result.error.issues.find(i => i.path[0] === field);
+            
+            if (fieldError) {
+                container.classList.add('error');
+                
+                const errorIcon = document.createElement('span');
+                errorIcon.className = 'validation-icon error';
+                errorIcon.textContent = '❗';
+                errorIcon.title = fieldError.message;
+                container.appendChild(errorIcon);
+                
+            } else if (data[field] && !fieldError) {
+                container.classList.add('success');
+                
+                const successIcon = document.createElement('span');
+                successIcon.className = 'validation-icon success';
+                successIcon.textContent = '✔';
+                container.appendChild(successIcon);
+            }
+        });
+        
+        const passwordsMatch = result.success && 
+                             data.newPassowrd?.trim() && 
+                             data.confirmNewPassword?.trim();
+        
+        changePasswordBtn.disabled = currentPasswordEmpty || !passwordsMatch;
+    });
+}
+
+function resetChangePasswordForm() {
+    currentPasswordElement.value = '';
+    newPasswordElement.value = '';
+    confirmNewPasswordElement.value = '';
+    
+    const fieldsToValidate = ['newPassowrd', 'confirmNewPassword'];
+    
+    fieldsToValidate.forEach(field => {
+        const input = document.querySelector(`[name="${field}"]`);
+        const container = input?.parentElement;
+        if (!container) return;
+        
+        container.classList.remove('error', 'success');
+        
+        const existingIcon = container.querySelector('.validation-icon');
+        if (existingIcon) existingIcon.remove();
+    });
+    
+    changePasswordBtn.disabled = true;
 }
