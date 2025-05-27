@@ -24,8 +24,9 @@
 .login-form__button {
   width: 100%;
   max-width: 300px;
-
+  height: 40px;
 }
+
 
 .login-title {
   font-size: 32px;

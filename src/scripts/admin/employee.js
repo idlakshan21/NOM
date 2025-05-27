@@ -132,9 +132,16 @@ form.addEventListener('input', () => {
         return data[field]?.trim() && !fieldError;
     });
 
-    ['btn_save_employee', 'btn_update_employee', 'btn_delete_employee'].forEach(id => {
-        document.getElementById(id).disabled = !isFormValid;
-    });
+    if (isEditMode) {
+        document.getElementById('btn_save_employee').disabled = true;
+        document.getElementById('btn_update_employee').disabled = !isFormValid;
+        document.getElementById('btn_delete_employee').disabled = !isFormValid;
+    } else {
+       
+        document.getElementById('btn_save_employee').disabled = !isFormValid;
+        document.getElementById('btn_update_employee').disabled = true;
+        document.getElementById('btn_delete_employee').disabled = true;
+    }
 });
 
 //----------Employee Save event-----------
