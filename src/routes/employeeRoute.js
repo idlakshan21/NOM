@@ -17,3 +17,6 @@ export function getAllEmployeesUrl(baseURL, page, size) {
 export function getDeleteEmployeeUrl(baseURL, userId) {
     return `${baseURL}/user?userId=${userId}`;
 }
+export function getChangePasswordEmployeeUrl(baseURL) {
+    return `${baseURL}/user/updateUserPassword`;
+}

@@ -1,6 +1,6 @@
 import { validatedEmployeeSchema } from '../../validation/employeeSchema.js';
 import { validatedChangePasswordSchema } from '../../validation/changePasswordSchema.js';
-import { saveEmployee, updateEmployee, fetchAllEmployees, deleteEmployee } from '../../api/employeeApi.js';
+import { saveEmployee, updateEmployee, fetchAllEmployees, deleteEmployee,changePassword } from '../../api/employeeApi.js';
 import { countAllEmployee } from './dashboard.js'
 
 const form = document.getElementById('employee_Form');
@@ -29,6 +29,7 @@ const newPasswordElement = document.getElementById('employee_newPassword');
 const confirmNewPasswordElement = document.getElementById('employee_confirm_newPassword');
 const changePasswordBtn = document.getElementById('btn_changePassword');
 const changePasswordEmpName = document.getElementById('selectedEmployeeName');
+
 
 
 let isEditMode = false;
@@ -68,6 +69,11 @@ document.addEventListener('DOMContentLoaded', async function () {
         empBackgroundOverlay.classList.remove("overlay")
         empSideNavBr.style.pointerEvents = "auto"
         empNavbar.style.pointerEvents = "auto"
+
+    });
+
+      changePasswordBtn.addEventListener("click", function () {
+        employeeChangePasswordEvent(baseUrl);
 
     });
 
@@ -760,6 +766,64 @@ function initializeChangePasswordValidation() {
         changePasswordBtn.disabled = currentPasswordEmpty || !passwordsMatch;
     });
 }
+
+
+//----------Employee Change Password event-----------
+async function employeeChangePasswordEvent(baseUrl) {
+    const currentPassword = currentPasswordElement.value;
+    const newPassword = newPasswordElement.value;
+    const confirmPassword = confirmNewPasswordElement.value;
+
+    if (newPassword !== confirmPassword) {
+        return;
+    }
+
+    const employeePasswordData = {
+        userId: empChangePasswordId.value,
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+    };
+
+    try {
+        const response = await changePassword(baseUrl,employeePasswordData);
+       
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Employee's password has been changed successfully!",
+            showConfirmButton: false,
+            timer: 1500
+        });
+
+        resetEmployeeInput();
+        resetChangePasswordForm();
+        currentPasswordElement.value = '';
+        newPasswordElement.value = '';
+        confirmNewPasswordElement.value = '';
+        popupEmployee.style.display = 'none';
+        empBackgroundOverlay.classList.remove("overlay");
+        empSideNavBr.style.pointerEvents = "auto";
+        empNavbar.style.pointerEvents = "auto";
+        btnOpenChangePassword.disabled = true;
+
+    } catch (error) {
+        console.error('Error changing password:', error);
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Failed to change password. Please try again!",
+            customClass: {
+                confirmButton: 'swal-button--orange'
+            }
+        });
+
+        currentPasswordElement.value = '';
+        newPasswordElement.value = '';
+        confirmNewPasswordElement.value = '';
+          resetChangePasswordForm();
+    }
+}
+
 
 function resetChangePasswordForm() {
     currentPasswordElement.value = '';
