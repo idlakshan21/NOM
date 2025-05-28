@@ -420,6 +420,20 @@ td {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
+.alert-orange-button {
+    background-color:var(--color-primary) !important;
+    border-color:var(--color-primary) !important;
+    border: none !important;
+    outline: none !important;
+  }
+
+  .alert-black-button {
+    background-color:var(--color-secondary) !important;
+    border-color:var(--color-secondaryr) !important;
+    border: none !important;
+    outline: none !important;
+  }
+
 @media (max-width: 1200px) {
   .btn-submit {
     width: 80px;

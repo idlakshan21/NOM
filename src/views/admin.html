@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../css/admin/layout.css">
     <link rel="stylesheet" href="../css/admin/dashboard.css">
     <link rel="stylesheet" href="../css/admin/employee.css">
+    <link rel="stylesheet" href="../css/admin/customer.css">
 </head>
 
 <body>
@@ -128,7 +129,7 @@
             </nav>
 
             <!-- ==========================admin-dashboard=================================   -->
-            <section class="admin-section dashboard" style="display: block;" id="dashboard-section">
+            <section class="admin-section" style="display: block;" id="dashboard-section">
                 <div class="dashboard-container">
                     <div class="dashboard-left">
                         <div class="dashboard-details">
@@ -219,14 +220,14 @@
             </section>
 
             <!-- ==========================admin-Employee=================================   -->
-            <section class="admin-section employee" id="employee-section" style="display: none;">
+            <section class="admin-section" id="employee-section" style="display: none;">
                 <div class="empBackground"></div>
-                <div class="employee-container admin-container">
+                <div class="admin-container">
                     <div class="employee-wrap-left">
                         <div class="employee-header-wrap">
                             <h1 class="heading-employee">Employee Manage</h3>
                                 <div class="btnAddingredients-area">
-                                    <button class="btn-submit" id="btn_changePassword_popup" disabled >Change
+                                    <button class="btn-submit" id="btn_changePassword_popup" disabled>Change
                                         Password</button>
                                 </div>
                         </div>
@@ -475,6 +476,139 @@
                 </div>
             </div>
 
+            <!-- ==========================admin-Customer=================================   -->
+            <section class="admin-section" id="customer-section" style="display: none;">
+                <div class="admin-container">
+                    <div class="admin-container-wrap">
+                        <div class="employee-header-wrap" style="margin-bottom: 0%;">
+                            <h1 class="heading-employee">Customer Manage</h3>
+                                <div class="input-container" style="margin-bottom: 0; width: 20%; margin-right: 2%;">
+                                    <input type="text" placeholder="Customer Contact">
+                                    <div id="customer_contact_list"></div>
+                                </div>
+                        </div>
+
+                        <div class="customer-container-top">
+                            <form action="" class="customer-form-wraper" id="customer_Form">
+                                <div class="customer-form-wraper-input">
+                                    <div class="input-container-customer input-container" style="width: 200px;">
+                                        <input class="customer-input-field-id" type="text" id="customer_id" disabled
+                                            placeholder="Customer Id" name="customerId">
+                                    </div>
+
+                                    <div class="input-container-customer input-container">
+                                        <input class="customer-input-field keyboard-input" type="text"
+                                            id="customer_name" placeholder="Customer Name" name="customerName">
+                                    </div>
+
+                                    <div class="input-container-customer input-container">
+                                        <input class="customer-input-field keyboard-input" type="text"
+                                            id="customer_contact" placeholder="Customer Contact" name="customerContact">
+                                    </div>
+                                    <div class="input-container-customer input-container" style="width: 200px;">
+                                        <select name="" id="customer_credit_status">
+                                            <option value="" selected>Credit Status</option>
+                                            <option value="Disabled">Disabled</option>
+                                            <option value="Enabled">Enabled</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="customer-form-wraper-buttonArea">
+                                    <button class="btn-submit" id="btn_delete_customer" type="button"
+                                        disabled>Delete</button>
+                                    <button class="btn-submit" id="btn_update_customer" type="button"
+                                        disabled>Update</button>
+
+                                    <button class="btn-submit" id="btn_save_customer" type="button"
+                                        disabled>Save</button>
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                        <div class="customer-container-bottom">
+
+                            <table id="tblcustomer">
+                                <thead>
+                                    <tr>
+                                        <th>#Id</th>
+                                        <th>Customer ID</th>
+                                        <th>Name</th>
+                                        <th>Mobile</th>
+                                        <th>Credit Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbl_customer_body">
+
+                                </tbody>
+                            </table>
+                            <div id="customer-pagination-controls" class="pagination"></div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="draggable-keyboard">
+                        <img class="btnDraggable_keyboard" src="../icons/keyboard-icon.png" width="70px" alt="">
+                    </div>
+                    <div class="keyboard-outer" style="display: none;">
+                        <div class="admin-keyboard-row">
+                            <div class="admin-keyboard-button admin-keyboard-button-number">1</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">2</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">3</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">4</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">5</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">6</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">7</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">8</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">9</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">0</div>
+                        </div>
+                        <div class="admin-keyboard-row">
+                            <div class="admin-keyboard-button">Q</div>
+                            <div class="admin-keyboard-button">W</div>
+                            <div class="admin-keyboard-button">E</div>
+                            <div class="admin-keyboard-button">R</div>
+                            <div class="admin-keyboard-button">T</div>
+                            <div class="admin-keyboard-button">Y</div>
+                            <div class="admin-keyboard-button">U</div>
+                            <div class="admin-keyboard-button">I</div>
+                            <div class="admin-keyboard-button">O</div>
+                            <div class="admin-keyboard-button">P</div>
+                        </div>
+                        <div class="admin-keyboard-row">
+                            <div class="admin-keyboard-button">A</div>
+                            <div class="admin-keyboard-button">S</div>
+                            <div class="admin-keyboard-button">D</div>
+                            <div class="admin-keyboard-button">F</div>
+                            <div class="admin-keyboard-button">G</div>
+                            <div class="admin-keyboard-button">H</div>
+                            <div class="admin-keyboard-button">J</div>
+                            <div class="admin-keyboard-button">K</div>
+                            <div class="admin-keyboard-button">L</div>
+                        </div>
+                        <div class="admin-keyboard-row">
+                            <div class="admin-keyboard-button">Z</div>
+                            <div class="admin-keyboard-button">X</div>
+                            <div class="admin-keyboard-button">C</div>
+                            <div class="admin-keyboard-button">V</div>
+                            <div class="admin-keyboard-button">B</div>
+                            <div class="admin-keyboard-button">N</div>
+                            <div class="admin-keyboard-button">M</div>
+                        </div>
+                        <div class="admin-keyboard-row">
+                            <div class="admin-keyboard-button admin-keyboard-button-special"
+                               >!#*</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-keyChange"
+                                >abc?</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-enter">Space</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-backspace">Backspace</div>
+                        </div>
+                    </div> -->
+                </div>
+            </section>
+
 
 
 
@@ -492,6 +626,7 @@
     <script src="../scripts/keyboad.js"></script>
     <script type="module" src="../scripts/admin/dashboard.js"></script>
     <script type="module" src="../scripts/admin/employee.js"></script>
+    <script type="module" src="../scripts/admin/customer.js"></script>
 
 </body>
 

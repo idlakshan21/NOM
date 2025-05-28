@@ -1,0 +1,134 @@
+
+#search_customer_contact{
+    width: 20%;
+}
+
+
+
+.customer-container-top{
+    width: 99%;
+    height: 20%;
+ 
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.customer-container-bottom{
+    width: 99%;
+    height: 70%;
+    background-color: white;   
+    margin: 5px 5px 0 5px;
+
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+.customer-form-wraper{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+ 
+   width: 98%;
+   display: flex;
+   align-items: flex-end;
+  
+  
+
+}
+
+.customer-form-wraper-input{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 2%;
+
+
+}
+
+.customer-form-wraper-buttonArea{
+    display: flex;
+    justify-content: space-evenly;
+    width: 35%;
+
+    margin-top: 1%;
+   
+    
+}
+
+.input-container-customer{
+   margin: 0;
+   max-width: 300px ;
+    display: flex;
+    align-items: center;
+
+
+}
+
+.input-container-customer input{
+    outline: none;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    border: none;
+    padding-left: 10px;
+    background-color: white;
+}
+
+.input-container-customer select{
+    outline: none;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    border: none;
+    padding-left: 10px;
+    background-color: white;
+}
+
+
+
+
+
+
+
+
+  
+@media only screen and (max-width: 1500px) {
+    .input-container-customer {
+        width: 25%; 
+        height: 45px; 
+    }
+
+
+    .input-container-customer-search {
+        width: 25%; 
+        height: 45px; 
+    }
+
+}
+
+@media only screen and (max-width: 1392px) {
+    .input-container-customer {
+        width: 20%; 
+        height: 45px; 
+    }
+
+    .input-container-customer-search {
+        width: 21.6%; 
+        height: 43px; 
+        margin-right: 6%;
+    }
+
+
+   
+}
+
+
