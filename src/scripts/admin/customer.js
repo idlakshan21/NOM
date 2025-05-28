@@ -1,5 +1,5 @@
 import { validatedCustomerSchema } from '../../validation/customerSchema.js';
-import { saveCustomer,loadAllCustomers } from '../../api/customerApi.js';
+import { saveCustomer, loadAllCustomers, deleteCustomer, updateCustomer,searchCustomer } from '../../api/customerApi.js';
 
 const customerForm = document.getElementById('customer_Form');
 const customerIdElement = document.getElementById("customer_id");
@@ -16,13 +16,15 @@ const customerInputs = document.querySelectorAll('.customer-input-field');
 
 const tblCustomers = document.getElementById("tbl_customer_body");
 
+
 let isEditModeCustomer = false;
 
 document.addEventListener('DOMContentLoaded', async function () {
     const baseUrl = await window.api.getBaseUrl();
 
     customerNameElement.focus();
-     loadAllCustomerToTable(baseUrl,0, 8);
+    loadAllCustomerToTable(baseUrl, 0, 10);
+
 
 
     customerSaveBtn.addEventListener('click', function () {
@@ -30,12 +32,20 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
 
     customerUpdateBtn.addEventListener('click', function () {
-        upadateCustomer(baseUrl)
+        handleUpadateCustomer(baseUrl)
     })
 
     customerDeleteBtn.addEventListener('click', function () {
-        deleteCustomer(baseUrl)
+        handleDeleteCustomer(baseUrl)
     });
+
+    customerNameElement.addEventListener('input', clearCustomerdIfFieldsEmpty);
+    customerContactElement.addEventListener('input', clearCustomerdIfFieldsEmpty);
+
+    document.querySelector("#search_customer_contact").addEventListener("input", () => {
+        customerFilterTable(baseUrl,0,10);
+    });
+
 
 })
 
@@ -141,9 +151,9 @@ customerForm.addEventListener('input', () => {
 //------------load all data to table------------ 
 async function loadAllCustomerToTable(baseUrl, page, size) {
     try {
-        const customersList =await loadAllCustomers(baseUrl,page,size)
+        const customersList = await loadAllCustomers(baseUrl, page, size)
 
-       
+
         const customerData = customersList.data.data;
         const totalCount = customersList.data.totalCount;
 
@@ -182,11 +192,8 @@ async function loadAllCustomerToTable(baseUrl, page, size) {
 
 function updateCustomerPaginationControls(baseUrl, currentPage, pageSize, totalPages) {
     let paginationHtml = "";
-
-    // Previous Button
     paginationHtml += `<button class="pagination-btn" data-page="${currentPage - 1}" ${currentPage === 0 ? "disabled" : ""}>Prev</button>`;
 
-    // Page Buttons
     if (totalPages <= 5) {
         for (let i = 0; i < totalPages; i++) {
             paginationHtml += `<button class="pagination-btn ${i === currentPage ? "active" : ""}" data-page="${i}">${i + 1}</button>`;
@@ -212,13 +219,13 @@ function updateCustomerPaginationControls(baseUrl, currentPage, pageSize, totalP
         paginationHtml += `<button class="pagination-btn ${currentPage === totalPages - 1 ? "active" : ""}" data-page="${totalPages - 1}">${totalPages}</button>`;
     }
 
-    // Next Button
+
     paginationHtml += `<button class="pagination-btn" data-page="${currentPage + 1}" ${currentPage >= totalPages - 1 ? "disabled" : ""}>Next</button>`;
 
-    const paginationControls = document.getElementById("customer-pagination-controls");
+    const paginationControls = document.getElementById("pagination-controls_customer");
     paginationControls.innerHTML = paginationHtml;
 
-    // Attach Click Event to Pagination Buttons
+
     const paginationButtons = document.querySelectorAll(".pagination-btn");
     paginationButtons.forEach(button => {
         button.addEventListener("click", function () {
@@ -265,7 +272,8 @@ async function handleSaveCustomer(baseUrl) {
             timer: 1500
         });
         resetCustomerInput();
-        
+        loadAllCustomerToTable(baseUrl, 0, 10);
+
     } catch (error) {
         console.error('Error saving customer:', error);
         Swal.fire({
@@ -277,7 +285,29 @@ async function handleSaveCustomer(baseUrl) {
 }
 
 
+//customer table click event
+function customerTableClickEvenetHandle() {
+    const tblCustomerRows = tblCustomers.getElementsByTagName("tr");
+    for (let i = 0; i < tblCustomerRows.length; i++) {
+        tblCustomerRows[i].addEventListener('click', function () {
+            isEditModeCustomer = true;
+            const cells = tblCustomerRows[i].getElementsByTagName("td");
 
+
+            const cusId = cells[1].textContent;
+            const cusName = cells[2].textContent;
+            const cusContact = cells[3].textContent;
+            const cusStatus = cells[4].textContent;
+
+            customerIdElement.value = cusId;
+            customerNameElement.value = cusName;
+            customerContactElement.value = cusContact;
+            customerCreditStatuslement.value = cusStatus;
+
+            customerForm.dispatchEvent(new Event('input'));
+        });
+    }
+}
 
 
 //------------reset inputs function-----------
@@ -288,7 +318,7 @@ function resetCustomerInput() {
     customerCreditStatuslement.value = ""
     customerNameElement.focus();
 
-   const fields = ['customerName', 'customerContact', 'customerCreditStatus'];
+    const fields = ['customerName', 'customerContact', 'customerCreditStatus'];
 
     fields.forEach(field => {
         const input = document.querySelector(`[name="${field}"]`);
@@ -308,4 +338,160 @@ function resetCustomerInput() {
 }
 
 
+function clearCustomerdIfFieldsEmpty() {
+    const cusName = customerNameElement.value.trim();
+    const cusContact = customerContactElement.value.trim();
 
+    if (cusName === '' && cusContact === '') {
+        isEditModeCustomer = false;
+
+        customerIdElement.value = '';
+        customerCreditStatuslement.value = '';
+        customerContactElement.value = '';
+        customerNameElement.value = '';
+
+        const allFields = ['customerName', 'customerContact', 'customerCreditStatus'];
+        allFields.forEach(field => {
+            const input = document.querySelector(`[name="${field}"]`);
+            const container = input?.parentElement;
+            if (container) {
+                container.classList.remove('error', 'success');
+                const existingIcon = container.querySelector('.validation-icon');
+                if (existingIcon) existingIcon.remove();
+            }
+        });
+
+        ['btn_save_customer', 'btn_update_customer', 'btn_delete_customer'].forEach(id => {
+            document.getElementById(id).disabled = true;
+        });
+    }
+}
+
+
+async function handleDeleteCustomer(baseUrl) {
+    const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#EA6D27",
+        cancelButtonColor: "#101A24",
+        confirmButtonText: "Yes, delete it!"
+    });
+
+    if (result.isConfirmed) {
+        await deleteCustomer(baseUrl, customerIdElement.value);
+
+        await Swal.fire({
+            title: "Deleted!",
+            text: "Customer deleted successfully.",
+            icon: "success",
+            confirmButtonColor: "#EA6D27",
+            confirmButtonText: "OK"
+        });
+
+        loadAllCustomerToTable(baseUrl, 0, 10);
+        resetCustomerInput();
+    }
+}
+
+//------------customer update event handle------------ 
+async function handleUpadateCustomer(baseUrl) {
+
+    const customerUpdateData = {
+        cusId: customerIdElement.value,
+        cusName: customerNameElement.value,
+        cusMobileNo: customerContactElement.value,
+        creditStatus: customerCreditStatuslement.value
+    };
+
+
+    try {
+        await updateCustomer(baseUrl, customerUpdateData);
+
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Customer updated successfully!",
+            showConfirmButton: false,
+            timer: 1500
+        });
+
+        loadAllCustomerToTable(baseUrl, 0, 10);
+        resetCustomerInput()
+    } catch (error) {
+        console.error('Error updating customer:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error occurred while updating the customer. Please try again.'
+        });
+        resetCustomerInput()
+    }
+
+
+
+}
+
+async function customerFilterTable(baseUrl,page, size) {
+    try {
+        const searchedCustomer = document.querySelector("#search_customer_contact").value.trim();
+
+        const customerTableBody = document.querySelector("#tbl_customer_body");
+        customerTableBody.innerHTML = "";
+
+     
+        let found = false;
+
+        while (!found) {
+          
+
+            const result = await searchCustomer(baseUrl,page,size)
+            const customers = result.data.data;
+
+            const filteredCustomers = customers.filter((customer) =>
+                customer.cusMobileNo.includes(searchedCustomer)
+            );
+
+            if (filteredCustomers.length > 0) {
+                found = true;
+
+                let rowNumber = 1;
+                filteredCustomers.forEach((customer) => {
+                    const creditStatus = customer.creditStatus;
+                    const statusColor = creditStatus === "Disabled" ? "#101A24" : "#EA6D27";
+                    const isDisabled = customer.cusId === 1 && customer.cusName === "unKnown";
+
+                    const row = document.createElement("tr");
+                    if (isDisabled) {
+                        row.classList.add("disabled-row");
+                    }
+
+                    row.innerHTML = `
+                        <td>${rowNumber++}</td>
+                        <td>${customer.cusId}</td>
+                        <td>${customer.cusName}</td>
+                        <td>${customer.cusMobileNo}</td>
+                        <td style="color: ${statusColor}">${creditStatus}</td>
+                    `;
+
+                    customerTableBody.appendChild(row);
+                });
+            }
+
+            if (customers.length < size) break;
+
+            page++;
+        }
+
+        if (!found) {
+            const noResultsRow = document.createElement("tr");
+            noResultsRow.innerHTML = `
+                <td colspan="5">No customers found</td>
+            `;
+            customerTableBody.appendChild(noResultsRow);
+        }
+    } catch (error) {
+        console.error("Error filtering customers:", error);
+    }
+}

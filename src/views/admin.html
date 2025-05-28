@@ -483,7 +483,7 @@
                         <div class="employee-header-wrap" style="margin-bottom: 0%;">
                             <h1 class="heading-employee">Customer Manage</h3>
                                 <div class="input-container" style="margin-bottom: 0; width: 20%; margin-right: 2%;">
-                                    <input type="text" placeholder="Customer Contact">
+                                    <input type="number" placeholder="Customer Contact" id="search_customer_contact">
                                     <div id="customer_contact_list"></div>
                                 </div>
                         </div>
@@ -545,7 +545,9 @@
 
                                 </tbody>
                             </table>
-                            <div id="customer-pagination-controls" class="pagination"></div>
+                            <div class="pagination-wrapper">
+                                <div id="pagination-controls_customer" class="pagination"></div>
+                            </div>
                         </div>
                     </div>
 
