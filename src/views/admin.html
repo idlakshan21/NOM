@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/admin/dashboard.css">
     <link rel="stylesheet" href="../css/admin/employee.css">
     <link rel="stylesheet" href="../css/admin/customer.css">
+    <link rel="stylesheet" href="../css/admin/order.css">
 </head>
 
 <body>
@@ -476,6 +477,160 @@
                 </div>
             </div>
 
+            <!-- ==========================admin-Order=================================   -->
+            <section class="admin-section" id="order-section" style="display: none;">
+                <div class="order-container admin-container">
+                    <div class="employee-header-wrap order-header-wrap">
+                        <h1 class="heading-employee">Order Summary</h3>
+                    </div>
+                    <div class="order-noti-wrap">
+                        <div class="order-noti-box">
+                            <img src="../assets/icons/check-out.png" alt="" width="30%">
+                            <div>
+                                <p>Total Orders</p>
+                                <h2 id="orderCount">0</h2>
+                            </div>
+                        </div>
+                        <div class="order-noti-box">
+                            <img src="../assets/icons/credit-card.png" alt="" width="30%">
+                            <div>
+                                <p>Card Total</p>
+                                <h2 id="cardCount">0</h2>
+                            </div>
+                        </div>
+                        <div class="order-noti-box">
+                            <img src="../assets/icons/money.png" alt="" width="30%">
+                            <div>
+                                <p>Cash Total</p>
+                                <h2 id="cashCount">0</h2>
+                            </div>
+                        </div>
+                        <div class="order-noti-box">
+                            <img src="../assets/icons/payment-protection.png" alt="" width="30%">
+                            <div>
+                                <p>Credit Total</p>
+                                <h2 id="creditCount">0</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-table-wrap">
+                        <div class="order-table-filters order-table-filters">
+                            <!-- <div class="category-search"> -->
+                            <div class="input-container">
+                                <input type="text" list="dropdown-menu-oid" id="selectOrderId_order"
+                                    class="dropdown-input dropdown-input-oid keyboard-input"
+                                    placeholder="Select Order Id">
+
+                                <datalist id="dropdown-menu-oid">
+
+                                </datalist>
+                            </div>
+                            <div class="input-container">
+                                <input type="text" list="dropdown-menu-tid" id="selectTable_order"
+                                    class="dropdown-input dropdown-input-tid keyboard-input"
+                                    placeholder="Select Table Id">
+                                <datalist id="dropdown-menu-tid">
+
+                                </datalist>
+                            </div>
+                            <div class="input-container">
+                                <input type="text" list="dropdown-menu-eid" id="selectCustomer_order"
+                                    class="dropdown-input dropdown-input-eid keyboard-input"
+                                    placeholder="Select Customer">
+                                <datalist id="dropdown-menu-eid">
+
+                                </datalist>
+                            </div>
+                            <!-- </div> -->
+                            <div class="input-container">
+                                <input type="date" id="date-picker-order">
+                            </div>
+                        </div>
+                        <div class="order-table">
+                            <table id="tblOrder">
+                                <thead>
+                                    <tr>
+                                        <th>Order Id</th>
+                                        <th>Table Id</th>
+                                        <th>Customer</th>
+                                        <th>Date & Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblOrderBody">
+
+                                </tbody>
+
+                            </table>
+                            <div class="pagination-wrapper">
+                                <div id="pagination-controls_order" class="pagination"></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- <div class="draggable-keyboard">
+                        <img class="btnDraggable_keyboard" src="../icons/keyboard-icon.png" width="70px" alt="">
+                    </div>
+                    <div class="keyboard-outer" style="display: none;">
+                        <div class="admin-keyboard-row">
+                            <div class="admin-keyboard-button admin-keyboard-button-number">1</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">2</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">3</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">4</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">5</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">6</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">7</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">8</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">9</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-number">0</div>
+                        </div>
+                        <div class="admin-keyboard-row">
+                            <div class="admin-keyboard-button">Q</div>
+                            <div class="admin-keyboard-button">W</div>
+                            <div class="admin-keyboard-button">E</div>
+                            <div class="admin-keyboard-button">R</div>
+                            <div class="admin-keyboard-button">T</div>
+                            <div class="admin-keyboard-button">Y</div>
+                            <div class="admin-keyboard-button">U</div>
+                            <div class="admin-keyboard-button">I</div>
+                            <div class="admin-keyboard-button">O</div>
+                            <div class="admin-keyboard-button">P</div>
+                        </div>
+                        <div class="admin-keyboard-row">
+                            <div class="admin-keyboard-button">A</div>
+                            <div class="admin-keyboard-button">S</div>
+                            <div class="admin-keyboard-button">D</div>
+                            <div class="admin-keyboard-button">F</div>
+                            <div class="admin-keyboard-button">G</div>
+                            <div class="admin-keyboard-button">H</div>
+                            <div class="admin-keyboard-button">J</div>
+                            <div class="admin-keyboard-button">K</div>
+                            <div class="admin-keyboard-button">L</div>
+                        </div>
+                        <div class="admin-keyboard-row">
+                            <div class="admin-keyboard-button">Z</div>
+                            <div class="admin-keyboard-button">X</div>
+                            <div class="admin-keyboard-button">C</div>
+                            <div class="admin-keyboard-button">V</div>
+                            <div class="admin-keyboard-button">B</div>
+                            <div class="admin-keyboard-button">N</div>
+                            <div class="admin-keyboard-button">M</div>
+                        </div>
+                        <div class="admin-keyboard-row">
+                            <div class="admin-keyboard-button admin-keyboard-button-special"
+                               >!#*</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-keyChange"
+                               >abc?</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-enter">Space</div>
+                            <div class="admin-keyboard-button admin-keyboard-button-backspace">Backspace</div>
+                        </div>
+                    </div> -->
+
+
+                </div>
+            </section>
+
+
             <!-- ==========================admin-Customer=================================   -->
             <section class="admin-section" id="customer-section" style="display: none;">
                 <div class="admin-container">
@@ -497,13 +652,13 @@
                                     </div>
 
                                     <div class="input-container-customer input-container">
-                                        <input class="customer-input-field keyboard-input" type="text"
-                                            id="customer_name" placeholder="Customer Name" name="customerName">
+                                        <input class="customer-input-field" type="text" id="customer_name"
+                                            placeholder="Customer Name" name="customerName">
                                     </div>
 
                                     <div class="input-container-customer input-container">
-                                        <input class="customer-input-field keyboard-input" type="text"
-                                            id="customer_contact" placeholder="Customer Contact" name="customerContact">
+                                        <input class="customer-input-field" type="text" id="customer_contact"
+                                            placeholder="Customer Contact" name="customerContact">
                                     </div>
                                     <div class="input-container-customer input-container" style="width: 200px;">
                                         <select name="customerCreditStatus" id="customer_credit_status">
@@ -629,6 +784,7 @@
     <script type="module" src="../scripts/admin/dashboard.js"></script>
     <script type="module" src="../scripts/admin/employee.js"></script>
     <script type="module" src="../scripts/admin/customer.js"></script>
+    <script type="module" src="../scripts/admin/order.js"></script>
 
 </body>
 

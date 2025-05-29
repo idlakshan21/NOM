@@ -1,12 +1,8 @@
 
 
-
-
 .customer-container-top{
     width: 99%;
     height: 20%;
- 
-   
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,7 +14,6 @@
     height: 70%;
     background-color: white;   
     margin: 5px 5px 0 5px;
-
     display: flex;
     flex-direction: column;
     padding: 0 10px;
@@ -31,7 +26,6 @@
    display: flex;
    flex-direction: column;
    align-items: center;
- 
    width: 98%;
    display: flex;
    align-items: flex-end;
@@ -47,8 +41,6 @@
     flex-wrap: wrap;
     width: 100%;
     margin-top: 2%;
-
-
 }
 
 .customer-form-wraper-buttonArea{
